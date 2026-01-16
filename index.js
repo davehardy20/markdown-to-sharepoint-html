@@ -74,6 +74,27 @@ function addInlineStyles(html, theme = 'light') {
   const tableHeaderBackground = isDarkTheme ? '#161b22' : '#f6f8fa';
   const tableBorder = isDarkTheme ? '#4b5563' : '#dfe2e5';
 
+  const syntaxColors = {
+    keyword: isDarkTheme ? '#c678dd' : '#d73a49',
+    string: isDarkTheme ? '#a5d6ff' : '#032f62',
+    number: isDarkTheme ? '#79b6ff' : '#005cc5',
+    builtIn: isDarkTheme ? '#519bce' : '#e36209',
+    literal: isDarkTheme ? '#cb416b' : '#005cc5',
+    comment: isDarkTheme ? '#7f848e' : '#6a737d',
+    meta: isDarkTheme ? '#7f848e' : '#d7ba7d',
+    attribute: isDarkTheme ? '#d19a66' : '#005cc5',
+    variable: isDarkTheme ? '#d19a66' : '#24292e',
+    function: isDarkTheme ? '#61afef' : '#6f42c1',
+    title: isDarkTheme ? '#ffcd57' : '#6f42c1',
+    params: isDarkTheme ? '#8da8ce' : '#d73a49',
+    tag: isDarkTheme ? '#e2777a' : '#22863a',
+    name: isDarkTheme ? '#e2777a' : '#22863a',
+    punctuation: isDarkTheme ? '#586069' : '#24292e',
+    subst: isDarkTheme ? '#56b6c2' : '#005cc5',
+    property: isDarkTheme ? '#d19a66' : '#6f42c1',
+    operator: isDarkTheme ? '#c5a316' : '#d73a49'
+  };
+
   const styleRules = [
     {
       pattern: /<h1>/g,
@@ -222,6 +243,74 @@ function addInlineStyles(html, theme = 'light') {
     {
       pattern: /<code>/g,
       replacement: `<code style="background-color: ${isDarkTheme ? 'rgba(255, 255, 255, 0.1)' : 'rgba(27, 31, 35, 0.05)'}; padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, \'Courier New\', monospace;">`
+    },
+    {
+      pattern: /<span class="hljs-keyword">/g,
+      replacement: `<span class="hljs-keyword" style="color: ${syntaxColors.keyword};">`
+    },
+    {
+      pattern: /<span class="hljs-string">/g,
+      replacement: `<span class="hljs-string" style="color: ${syntaxColors.string};">`
+    },
+    {
+      pattern: /<span class="hljs-number">/g,
+      replacement: `<span class="hljs-number" style="color: ${syntaxColors.number};">`
+    },
+    {
+      pattern: /<span class="hljs-built_in">/g,
+      replacement: `<span class="hljs-built_in" style="color: ${syntaxColors.builtIn};">`
+    },
+    {
+      pattern: /<span class="hljs-literal">/g,
+      replacement: `<span class="hljs-literal" style="color: ${syntaxColors.literal};">`
+    },
+    {
+      pattern: /<span class="hljs-comment">/g,
+      replacement: `<span class="hljs-comment" style="color: ${syntaxColors.comment};">`
+    },
+    {
+      pattern: /<span class="hljs-title">/g,
+      replacement: `<span class="hljs-title" style="color: ${syntaxColors.title};">`
+    },
+    {
+      pattern: /<span class="hljs-params">/g,
+      replacement: `<span class="hljs-params" style="color: ${syntaxColors.params};">`
+    },
+    {
+      pattern: /<span class="hljs-attribute">/g,
+      replacement: `<span class="hljs-attribute" style="color: ${syntaxColors.attribute};">`
+    },
+    {
+      pattern: /<span class="hljs-variable">/g,
+      replacement: `<span class="hljs-variable" style="color: ${syntaxColors.variable};">`
+    },
+    {
+      pattern: /<span class="hljs-function">/g,
+      replacement: `<span class="hljs-function" style="color: ${syntaxColors.function};">`
+    },
+    {
+      pattern: /<span class="hljs-tag">/g,
+      replacement: `<span class="hljs-tag" style="color: ${syntaxColors.tag};">`
+    },
+    {
+      pattern: /<span class="hljs-name">/g,
+      replacement: `<span class="hljs-name" style="color: ${syntaxColors.name};">`
+    },
+    {
+      pattern: /<span class="hljs-punctuation">/g,
+      replacement: `<span class="hljs-punctuation" style="color: ${syntaxColors.punctuation};">`
+    },
+    {
+      pattern: /<span class="hljs-subst">/g,
+      replacement: `<span class="hljs-subst" style="color: ${syntaxColors.subst};">`
+    },
+    {
+      pattern: /<span class="hljs-property">/g,
+      replacement: `<span class="hljs-property" style="color: ${syntaxColors.property};">`
+    },
+    {
+      pattern: /<span class="hljs-operator">/g,
+      replacement: `<span class="hljs-operator" style="color: ${syntaxColors.operator};">`
     }
   ];
 

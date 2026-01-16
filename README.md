@@ -112,8 +112,8 @@ Open the generated `output.html` file in a browser or text editor.
 | Headings (H1-H6) | Styled headings with anchor IDs | Proper sizing, margins, borders, clickable navigation |
 | **Bold** / *Italic* | Styled text | Font weight and style applied |
 | `Inline code` | Styled code | Light background, monospace font |
-| Code blocks (light theme) | Highlighted code | Light gray background (#f5f5f5) |
-| Code blocks (dark theme) | Highlighted code | Dark gray background (#1e1e1e) |
+| Code blocks (light theme) | Highlighted code | Light gray background (#f5f5f5) + **colored syntax** |
+| Code blocks (dark theme) | Highlighted code | Dark gray background (#1e1e1e) + **colored syntax** |
 | Ordered lists | Numbered lists | Proper nesting and spacing |
 | Unordered lists | Bulleted lists | Proper nesting and spacing |
 | [Links](url) | Styled links | Blue color, no underline, href preserved |
@@ -125,20 +125,23 @@ Open the generated `output.html` file in a browser or text editor.
 | Tables (dark theme) | Styled tables | Dark borders, dark header background |
 | Horizontal rules | Styled HR | Proper height and spacing |
 | Theme awareness | All elements | Adjusts colors based on --dark-theme flag |
+| **Syntax highlighting** | Colored code | Inline span colors applied to highlighted code keywords, strings, numbers |
 
 ## Dark/Light Theme Support
 
-For SharePoint sites with black or dark backgrounds, use the `--dark-theme` flag:
+For SharePoint sites with black or dark backgrounds, use to `--dark-theme` flag:
 
 **Light Theme** (default):
-- Code blocks: Light gray background (#f5f5f5)
+- Code blocks: Light gray background (#f5f5f5) with **colored syntax highlighting**
 - TOC: Light gray background (#f6f8fa)
 - Optimized for light SharePoint backgrounds
+- Syntax colors optimized for light mode (softer pastel tones)
 
 **Dark Theme**:
-- Code blocks: Dark gray background (#1e1e1e)
+- Code blocks: Dark gray background (#1e1e1e) with **colored syntax highlighting**
 - TOC: Dark background (#2d3333)
 - Better contrast for black/dark SharePoint backgrounds
+- Syntax colors optimized for dark mode (brighter keywords/strings)
 
 Example:
 ```bash

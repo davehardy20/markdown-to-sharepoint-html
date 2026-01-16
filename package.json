@@ -1,6 +1,6 @@
 {
   "name": "markdown-to-sharepoint-html",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Convert Markdown to HTML optimized for SharePoint with code block highlighting and inline styles",
   "main": "index.js",
   "bin": {
@@ -19,8 +19,10 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "markdown-it": "^14.1.0",
+    "commander": "^12.0.0",
     "highlight.js": "^11.9.0",
-    "commander": "^12.0.0"
+    "markdown-it": "^14.1.0",
+    "markdown-it-anchor": "^9.2.0",
+    "markdown-it-toc-done-right": "^4.2.0"
   }
 }

@@ -6,6 +6,8 @@ A Node.js CLI tool that converts Markdown files to HTML optimized for SharePoint
 
 - **Full Markdown Support**: Headings, bold/italic, lists, tables, links, images, blockquotes
 - **Syntax Highlighting**: Code blocks with highlight.js for 190+ languages
+- **Table of Contents**: Automatic TOC generation with clickable anchor links
+- **Anchor Links**: All headings have anchor IDs for internal page navigation
 - **SharePoint-Optimized**: Inline styles (no external CSS) and SharePoint-compatible class names
 - **CLI Tool**: Easy-to-use command-line interface
 - **Preserves Formatting**: All markdown elements properly styled for SharePoint's rich text editor
@@ -33,6 +35,12 @@ node bin/md2sp-html.js input.md output.html
 
 # Convert with full HTML structure (includes <html>, <head>, <body>)
 node bin/md2sp-html.js input.md output.html --wrap
+
+# Convert with table of contents (requires [TOC] marker in markdown)
+node bin/md2sp-html.js input.md output.html --toc
+
+# Convert with custom TOC title
+node bin/md2sp-html.js input.md output.html --toc --toc-title "Contents"
 ```
 
 ### Using the CLI
@@ -88,17 +96,36 @@ Open the generated `output.html` file in a browser or text editor.
 
 | Markdown Element | HTML Output | Notes |
 |-----------------|--------------|--------|
-| Headings (H1-H6) | Styled headings | Proper sizing, margins, borders |
+| Headings (H1-H6) | Styled headings with anchor IDs | Proper sizing, margins, borders, clickable navigation |
 | **Bold** / *Italic* | Styled text | Font weight and style applied |
 | `Inline code` | Styled code | Light background, monospace font |
 | Code blocks | Highlighted code | 190+ languages supported |
 | Ordered lists | Numbered lists | Proper nesting and spacing |
 | Unordered lists | Bulleted lists | Proper nesting and spacing |
-| [Links](url) | Styled links | Blue color, no underline |
+| [Links](url) | Styled links | Blue color, no underline, href preserved |
+| [TOC links](#heading) | Anchor links | Clickable internal navigation |
 | Images | Responsive images | Max-width, auto height |
 | > Blockquotes | Styled quotes | Left border, gray text |
 | Tables | Styled tables | Borders, padding, header styling |
 | Horizontal rules | Styled HR | Proper height and spacing |
+
+## Table of Contents (TOC)
+
+Add `[TOC]` marker in your markdown where you want the table of contents to appear:
+
+```markdown
+# My Document
+
+[TOC]
+
+## Section 1
+Content here...
+
+## Section 2
+More content...
+```
+
+When converted with `--toc`, this will generate a clickable table of contents with links to each heading section.
 
 ## Supported Languages for Syntax Highlighting
 
@@ -184,6 +211,8 @@ open test-output.html
 ## Dependencies
 
 - **markdown-it**: Markdown parser with full CommonMark support
+- **markdown-it-anchor**: Adds anchor IDs to headings
+- **markdown-it-toc-done-right**: Generates table of contents
 - **highlight.js**: Syntax highlighting for code blocks
 - **commander**: CLI framework
 

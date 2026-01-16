@@ -1,13 +1,11 @@
 const MarkdownIt = require('markdown-it');
 const hljs = require('highlight.js');
+const anchor = require('markdown-it-anchor');
+const toc = require('markdown-it-toc-done-right');
 
-/**
- * Create a markdown-it instance configured for SharePoint
- * - Uses inline styles for better compatibility
- * - Supports syntax highlighting for code blocks
- * - Preserves all markdown formatting elements
- */
-function createSharePointMarkdownConverter() {
+function createSharePointMarkdownConverter(options = {}) {
+  const { includeTOC = false, tocTitle = 'Table of Contents' } = options;
+
   const md = new MarkdownIt({
     html: true,
     linkify: true,
@@ -23,25 +21,39 @@ function createSharePointMarkdownConverter() {
     }
   });
 
+  md.use(anchor, {
+    permalink: false,
+    slugify: (s) => s.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, ''),
+    level: 1,
+    tabIndex: false
+  });
+
+  if (includeTOC) {
+    md.use(toc, {
+      tocTitle: `<h2 style="font-size: 1.5em; font-weight: bold; margin: 0.83em 0; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em;">${tocTitle}</h2>`,
+      tocClassName: 'markdown-it-toc',
+      listType: 'ul',
+      level: [1, 2, 3],
+      listClassName: 'markdown-it-toc-list',
+      itemClassName: 'markdown-it-toc-item',
+      linkClassName: 'markdown-it-toc-link',
+      callback: (html, ast) => {
+        return html;
+      }
+    });
+  }
+
   return md;
 }
 
-/**
- * Convert markdown string to HTML with SharePoint-compatible styling
- * @param {string} markdown - The markdown content to convert
- * @returns {string} HTML string ready for SharePoint
- */
-function markdownToSharePointHTML(markdown) {
-  const md = createSharePointMarkdownConverter();
+function markdownToSharePointHTML(markdown, options = {}) {
+  const { includeTOC = false, tocTitle = 'Table of Contents' } = options;
+  const md = createSharePointMarkdownConverter({ includeTOC, tocTitle });
   let html = md.render(markdown);
   html = addInlineStyles(html);
   return html;
 }
 
-/**
- * Add inline styles to HTML elements for SharePoint compatibility
- * This is needed because SharePoint strips external stylesheets and some classes
- */
 function addInlineStyles(html) {
   const styleRules = [
     {
@@ -131,6 +143,22 @@ function addInlineStyles(html) {
     {
       pattern: /<code>/g,
       replacement: '<code style="background-color: rgba(27, 31, 35, 0.05); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, \'Courier New\', monospace;">'
+    },
+    {
+      pattern: /<div class="markdown-it-toc">/g,
+      replacement: '<div class="markdown-it-toc" style="background-color: #f6f8fa; border: 1px solid #dfe2e5; padding: 16px; margin: 20px 0; border-radius: 6px;">'
+    },
+    {
+      pattern: /<ul class="markdown-it-toc-list">/g,
+      replacement: '<ul class="markdown-it-toc-list" style="padding-left: 0; margin: 10px 0;">'
+    },
+    {
+      pattern: /<li class="markdown-it-toc-item">/g,
+      replacement: '<li class="markdown-it-toc-item" style="margin: 8px 0;">'
+    },
+    {
+      pattern: /<a class="markdown-it-toc-link"/g,
+      replacement: '<a class="markdown-it-toc-link" style="color: #0366d6; text-decoration: none; font-weight: 500;"'
     }
   ];
 

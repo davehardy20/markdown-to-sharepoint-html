@@ -112,8 +112,8 @@ Open the generated `output.html` file in a browser or text editor.
 | Headings (H1-H6) | Styled headings with anchor IDs | Proper sizing, margins, borders, clickable navigation |
 | **Bold** / *Italic* | Styled text | Font weight and style applied |
 | `Inline code` | Styled code | Light background, monospace font |
-| Code blocks (light theme) | Highlighted code | Light gray background (#f5f5f5) + **colored syntax** |
-| Code blocks (dark theme) | Highlighted code | Dark gray background (#1e1e1e) + **colored syntax** |
+| Code blocks (light theme) | Highlighted code | Light gray background (#f5f5f5) + **colored syntax** (keywords in magenta/pink, strings in green) |
+| Code blocks (dark theme) | Highlighted code | Dark gray background (#1e1e1e) + **colored syntax** (keywords in cyan/blue, strings in orange/yellow) |
 | Ordered lists | Numbered lists | Proper nesting and spacing |
 | Unordered lists | Bulleted lists | Proper nesting and spacing |
 | [Links](url) | Styled links | Blue color, no underline, href preserved |

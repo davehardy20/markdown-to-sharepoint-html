@@ -1,0 +1,192 @@
+# Markdown to SharePoint HTML Converter
+
+A Node.js CLI tool that converts Markdown files to HTML optimized for SharePoint with syntax-highlighted code blocks and inline styles.
+
+## Features
+
+- **Full Markdown Support**: Headings, bold/italic, lists, tables, links, images, blockquotes
+- **Syntax Highlighting**: Code blocks with highlight.js for 190+ languages
+- **SharePoint-Optimized**: Inline styles (no external CSS) and SharePoint-compatible class names
+- **CLI Tool**: Easy-to-use command-line interface
+- **Preserves Formatting**: All markdown elements properly styled for SharePoint's rich text editor
+
+## Installation
+
+```bash
+# Clone or copy this repository
+cd markdown_to_sharepoint
+
+# Install dependencies
+npm install
+```
+
+## Usage
+
+### Basic Usage
+
+```bash
+# Convert markdown to HTML and print to stdout
+node bin/md2sp-html.js input.md
+
+# Convert to a file
+node bin/md2sp-html.js input.md output.html
+
+# Convert with full HTML structure (includes <html>, <head>, <body>)
+node bin/md2sp-html.js input.md output.html --wrap
+```
+
+### Using the CLI
+
+```bash
+# View help
+node bin/md2sp-html.js --help
+
+# Convert a markdown document
+node bin/md2sp-html.js README.md README-sharepoint.html --wrap
+```
+
+### Programmatic Usage
+
+```javascript
+const { markdownToSharePointHTML } = require('./index');
+
+const markdown = `# Title
+
+\`\`\`javascript
+function hello() {
+  console.log("Hello World");
+}
+\`\`\`
+`;
+
+const html = markdownToSharePointHTML(markdown);
+console.log(html);
+```
+
+## SharePoint Integration
+
+### Step 1: Convert Your Markdown
+
+```bash
+node bin/md2sp-html.js your-document.md output.html --wrap
+```
+
+### Step 2: Open Output File
+
+Open the generated `output.html` file in a browser or text editor.
+
+### Step 3: Copy to SharePoint
+
+1. Open your SharePoint page in edit mode
+2. Click on the rich text editor where you want to paste content
+3. Use **Edit Source** (or **HTML Source**) option in the editor toolbar
+4. Copy the content from the `<body>` tag of your HTML file (or the entire file if using --wrap)
+5. Paste into the SharePoint HTML editor
+6. Save and publish
+
+## What Gets Preserved
+
+| Markdown Element | HTML Output | Notes |
+|-----------------|--------------|--------|
+| Headings (H1-H6) | Styled headings | Proper sizing, margins, borders |
+| **Bold** / *Italic* | Styled text | Font weight and style applied |
+| `Inline code` | Styled code | Light background, monospace font |
+| Code blocks | Highlighted code | 190+ languages supported |
+| Ordered lists | Numbered lists | Proper nesting and spacing |
+| Unordered lists | Bulleted lists | Proper nesting and spacing |
+| [Links](url) | Styled links | Blue color, no underline |
+| Images | Responsive images | Max-width, auto height |
+| > Blockquotes | Styled quotes | Left border, gray text |
+| Tables | Styled tables | Borders, padding, header styling |
+| Horizontal rules | Styled HR | Proper height and spacing |
+
+## Supported Languages for Syntax Highlighting
+
+Code blocks with language specifiers are automatically highlighted:
+
+\`\`\`javascript
+// JavaScript code
+\`\`\`
+
+\`\`\`python
+# Python code
+\`\`\`
+
+\`\`\`bash
+# Bash scripts
+\`\`\`
+
+\`\`\`powershell
+# PowerShell scripts
+\`\`\`
+
+\`\`\`sql
+# SQL queries
+\`\`\`
+
+\`\`\`yaml
+# YAML configuration
+\`\`\`
+
+\`\`\`json
+# JSON data
+\`\`\`
+
+Supported languages include: JavaScript, TypeScript, Python, Java, C#, PHP, Ruby, Go, Rust, Swift, Kotlin, SQL, Bash, PowerShell, HTML, CSS, JSON, XML, YAML, and 180+ more.
+
+## SharePoint-Specific Features
+
+### Inline Styles
+
+All styles are applied inline to ensure SharePoint's content management system doesn't strip them:
+
+```html
+<h1 style="font-size: 2em; font-weight: bold;">Title</h1>
+<p style="margin: 1em 0; line-height: 1.6;">Content</p>
+```
+
+### Code Block Classes
+
+Code blocks use SharePoint's `ms-rteElement-CodeHTML` class for compatibility:
+
+```html
+<pre class="ms-rteElement-CodeHTML" style="...">
+  <code class="language-javascript">...</code>
+</pre>
+```
+
+### Why This Works in SharePoint
+
+1. **Inline CSS**: SharePoint strips external stylesheets and `<style>` tags in the body
+2. **No External Dependencies**: All styling is self-contained
+3. **SharePoint Classes**: Uses `ms-rteElement-CodeHTML` for code blocks
+4. **Proper HTML Structure**: Valid HTML5 that SharePoint accepts
+
+## Limitations
+
+- SharePoint may strip certain HTML attributes or classes
+- JavaScript and iframes will be removed by SharePoint's security filters
+- External stylesheets won't work (use inline styles)
+- Some advanced markdown extensions may not be supported
+
+## Testing
+
+A test file is included to demonstrate all features:
+
+```bash
+# Run the built-in test
+node bin/md2sp-html.js test.md test-output.html --wrap
+
+# Open the result in your browser
+open test-output.html
+```
+
+## Dependencies
+
+- **markdown-it**: Markdown parser with full CommonMark support
+- **highlight.js**: Syntax highlighting for code blocks
+- **commander**: CLI framework
+
+## License
+
+MIT

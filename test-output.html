@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>test</title>
+</head>
+<body>
+<h1 style="font-size: 2em; font-weight: bold; margin: 0.67em 0; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em;">Test Document for Markdown to SharePoint HTML Conversion</h1>
+<p style="margin: 1em 0; line-height: 1.6;">This document tests various markdown elements and code blocks.</p>
+<h2 style="font-size: 1.5em; font-weight: bold; margin: 0.83em 0; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em;">Headings</h2>
+<h3 style="font-size: 1.17em; font-weight: bold; margin: 1em 0;">Level 3 Heading</h3>
+<h4 style="font-size: 1em; font-weight: bold; margin: 1.33em 0;">Level 4 Heading</h4>
+<h5 style="font-size: 0.83em; font-weight: bold; margin: 1.67em 0;">Level 5 Heading</h5>
+<h6 style="font-size: 0.67em; font-weight: bold; margin: 2.33em 0;">Level 6 Heading</h6>
+<h2 style="font-size: 1.5em; font-weight: bold; margin: 0.83em 0; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em;">Text Formatting</h2>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Bold text</strong> and <em style="font-style: italic;">italic text</em> and <em style="font-style: italic;"><strong style="font-weight: bold;">bold italic</strong></em></p>
+<p style="margin: 1em 0; line-height: 1.6;"><s>Strikethrough</s> text is also supported.</p>
+<h2 style="font-size: 1.5em; font-weight: bold; margin: 0.83em 0; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em;">Lists</h2>
+<p style="margin: 1em 0; line-height: 1.6;">Unordered list:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Item 1</li>
+<li style="margin: 0.5em 0;">Item 2
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Nested item 2a</li>
+<li style="margin: 0.5em 0;">Nested item 2b</li>
+</ul>
+</li>
+<li style="margin: 0.5em 0;">Item 3</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;">Ordered list:</p>
+<ol style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">First item</li>
+<li style="margin: 0.5em 0;">Second item</li>
+<li style="margin: 0.5em 0;">Third item</li>
+</ol>
+<h2 style="font-size: 1.5em; font-weight: bold; margin: 0.83em 0; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em;">Links and Images</h2>
+<p style="margin: 1em 0; line-height: 1.6;">Visit <a href="https://github.com" style="color: #0366d6; text-decoration: none;">GitHub</a> for more information.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><img src="https://via.placeholder.com/150" alt="Sample Image" style="max-width: 100%; height: auto; display: block; margin: 1em 0;"></p>
+<h2 style="font-size: 1.5em; font-weight: bold; margin: 0.83em 0; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em;">Blockquotes</h2>
+<blockquote style="border-left: 4px solid #dfe2e5; padding: 0 1em; color: #6a737d; margin: 1em 0;">
+<p style="margin: 1em 0; line-height: 1.6;">This is a blockquote.
+It can span multiple lines.</p>
+</blockquote>
+<h2 style="font-size: 1.5em; font-weight: bold; margin: 0.83em 0; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em;">Code Blocks</h2>
+<h3 style="font-size: 1.17em; font-weight: bold; margin: 1em 0;">JavaScript Example</h3>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #666666; background-color: #f5f5f5; padding: 12px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-javascript" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-keyword">function</span> <span class="hljs-title function_">greet</span>(<span class="hljs-params">name</span>) {
+  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">`Hello, <span class="hljs-subst">${name}</span>!`</span>);
+}
+
+<span class="hljs-title function_">greet</span>(<span class="hljs-string">&#x27;World&#x27;</span>);
+</code></pre>
+<h3 style="font-size: 1.17em; font-weight: bold; margin: 1em 0;">Python Example</h3>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #666666; background-color: #f5f5f5; padding: 12px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-python" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-keyword">def</span> <span class="hljs-title function_">calculate_sum</span>(<span class="hljs-params">a, b</span>):
+    <span class="hljs-keyword">return</span> a + b
+
+result = calculate_sum(<span class="hljs-number">5</span>, <span class="hljs-number">3</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Result: <span class="hljs-subst">{result}</span>&quot;</span>)
+</code></pre>
+<h3 style="font-size: 1.17em; font-weight: bold; margin: 1em 0;">Bash Example</h3>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #666666; background-color: #f5f5f5; padding: 12px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-meta">#!/bin/bash</span>
+
+<span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Starting deployment...&quot;</span>
+<span class="hljs-built_in">cd</span> /app
+npm install
+npm start
+</code></pre>
+<h3 style="font-size: 1.17em; font-weight: bold; margin: 1em 0;">PowerShell Example</h3>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #666666; background-color: #f5f5f5; padding: 12px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-powershell" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-comment"># Install a module</span>
+<span class="hljs-built_in">Install-Module</span> <span class="hljs-literal">-Name</span> Az <span class="hljs-literal">-Force</span>
+
+<span class="hljs-comment"># Connect to Azure</span>
+<span class="hljs-built_in">Connect-AzAccount</span>
+
+<span class="hljs-comment"># List resources</span>
+<span class="hljs-built_in">Get-AzResourceGroup</span>
+</code></pre>
+<h3 style="font-size: 1.17em; font-weight: bold; margin: 1em 0;">JSON Example</h3>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #666666; background-color: #f5f5f5; padding: 12px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-json" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;test&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;1.0.0&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;dependencies&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">&quot;markdown-it&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^14.0.0&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;highlight.js&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;^11.0.0&quot;</span>
+  <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<h3 style="font-size: 1.17em; font-weight: bold; margin: 1em 0;">SQL Example</h3>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #666666; background-color: #f5f5f5; padding: 12px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-sql" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-keyword">SELECT</span>
+    id,
+    name,
+    email,
+    created_at
+<span class="hljs-keyword">FROM</span> users
+<span class="hljs-keyword">WHERE</span> status <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;active&#x27;</span>
+<span class="hljs-keyword">ORDER</span> <span class="hljs-keyword">BY</span> created_at <span class="hljs-keyword">DESC</span>
+LIMIT <span class="hljs-number">10</span>;
+</code></pre>
+<h3 style="font-size: 1.17em; font-weight: bold; margin: 1em 0;">HTML Example</h3>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #666666; background-color: #f5f5f5; padding: 12px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-html" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Sample Page<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Welcome<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>This is a sample HTML page.<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</code></pre>
+<h2 style="font-size: 1.5em; font-weight: bold; margin: 0.83em 0; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em;">Inline Code</h2>
+<p style="margin: 1em 0; line-height: 1.6;">Use <code style="background-color: rgba(27, 31, 35, 0.05); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">npm install</code> to install dependencies.</p>
+<h2 style="font-size: 1.5em; font-weight: bold; margin: 0.83em 0; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em;">Tables</h2>
+<table style="border-collapse: collapse; width: 100%; margin: 1em 0; border-spacing: 0;">
+<thead>
+<tr>
+<th style="border: 1px solid #dfe2e5; padding: 6px 13px; font-weight: bold; background-color: #f6f8fa;">Name</th>
+<th style="border: 1px solid #dfe2e5; padding: 6px 13px; font-weight: bold; background-color: #f6f8fa;">Type</th>
+<th style="border: 1px solid #dfe2e5; padding: 6px 13px; font-weight: bold; background-color: #f6f8fa;">Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border: 1px solid #dfe2e5; padding: 6px 13px;">Task 1</td>
+<td style="border: 1px solid #dfe2e5; padding: 6px 13px;">High</td>
+<td style="border: 1px solid #dfe2e5; padding: 6px 13px;">Done</td>
+</tr>
+<tr>
+<td style="border: 1px solid #dfe2e5; padding: 6px 13px;">Task 2</td>
+<td style="border: 1px solid #dfe2e5; padding: 6px 13px;">Medium</td>
+<td style="border: 1px solid #dfe2e5; padding: 6px 13px;">In Progress</td>
+</tr>
+<tr>
+<td style="border: 1px solid #dfe2e5; padding: 6px 13px;">Task 3</td>
+<td style="border: 1px solid #dfe2e5; padding: 6px 13px;">Low</td>
+<td style="border: 1px solid #dfe2e5; padding: 6px 13px;">Pending</td>
+</tr>
+</tbody>
+</table>
+<h2 style="font-size: 1.5em; font-weight: bold; margin: 0.83em 0; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em;">Horizontal Rule</h2>
+<hr style="height: 0.25em; padding: 0; margin: 24px 0; background-color: #e1e4e8; border: 0;">
+<h2 style="font-size: 1.5em; font-weight: bold; margin: 0.83em 0; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em;">Mixed Content Example</h2>
+<p style="margin: 1em 0; line-height: 1.6;">This paragraph has <strong style="font-weight: bold;">bold</strong>, <em style="font-style: italic;">italic</em>, <code style="background-color: rgba(27, 31, 35, 0.05); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">inline code</code>, and a <a href="https://example.com" style="color: #0366d6; text-decoration: none;">link</a>.</p>
+<h3 style="font-size: 1.17em; font-weight: bold; margin: 1em 0;">Code Block with Multiple Languages</h3>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #666666; background-color: #f5f5f5; padding: 12px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-yaml" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-attr">version:</span> <span class="hljs-string">&#x27;3.8&#x27;</span>
+<span class="hljs-attr">services:</span>
+  <span class="hljs-attr">web:</span>
+    <span class="hljs-attr">build:</span> <span class="hljs-string">.</span>
+    <span class="hljs-attr">ports:</span>
+      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;3000:3000&quot;</span>
+</code></pre>
+<blockquote style="border-left: 4px solid #dfe2e5; padding: 0 1em; color: #6a737d; margin: 1em 0;">
+<p style="margin: 1em 0; line-height: 1.6;">Note: YAML files are commonly used for configuration.</p>
+</blockquote>
+<hr style="height: 0.25em; padding: 0; margin: 24px 0; background-color: #e1e4e8; border: 0;">
+<h2 style="font-size: 1.5em; font-weight: bold; margin: 0.83em 0; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em;">Complex Code Example</h2>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #666666; background-color: #f5f5f5; padding: 12px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-typescript" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-keyword">interface</span> <span class="hljs-title class_">User</span> {
+  <span class="hljs-attr">id</span>: <span class="hljs-built_in">number</span>;
+  <span class="hljs-attr">name</span>: <span class="hljs-built_in">string</span>;
+  <span class="hljs-attr">email</span>: <span class="hljs-built_in">string</span>;
+}
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">UserService</span> {
+  <span class="hljs-keyword">private</span> <span class="hljs-attr">users</span>: <span class="hljs-title class_">User</span>[] = [];
+
+  <span class="hljs-title function_">addUser</span>(<span class="hljs-attr">user</span>: <span class="hljs-title class_">User</span>): <span class="hljs-built_in">void</span> {
+    <span class="hljs-variable language_">this</span>.<span class="hljs-property">users</span>.<span class="hljs-title function_">push</span>(user);
+  }
+
+  <span class="hljs-title function_">getUserById</span>(<span class="hljs-attr">id</span>: <span class="hljs-built_in">number</span>): <span class="hljs-title class_">User</span> | <span class="hljs-literal">undefined</span> {
+    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">users</span>.<span class="hljs-title function_">find</span>(<span class="hljs-function"><span class="hljs-params">u</span> =&gt;</span> u.<span class="hljs-property">id</span> === id);
+  }
+}
+
+<span class="hljs-keyword">const</span> service = <span class="hljs-keyword">new</span> <span class="hljs-title class_">UserService</span>();
+service.<span class="hljs-title function_">addUser</span>({ <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;John&#x27;</span>, <span class="hljs-attr">email</span>: <span class="hljs-string">&#x27;john@example.com&#x27;</span> });
+</code></pre>
+<h2 style="font-size: 1.5em; font-weight: bold; margin: 0.83em 0; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em;">Test Summary</h2>
+<p style="margin: 1em 0; line-height: 1.6;">This document tests:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">All heading levels (H1-H6)</li>
+<li style="margin: 0.5em 0;">Bold, italic, strikethrough</li>
+<li style="margin: 0.5em 0;">Ordered and unordered lists</li>
+<li style="margin: 0.5em 0;">Links and images</li>
+<li style="margin: 0.5em 0;">Blockquotes</li>
+<li style="margin: 0.5em 0;">Code blocks with syntax highlighting</li>
+<li style="margin: 0.5em 0;">Inline code</li>
+<li style="margin: 0.5em 0;">Tables</li>
+<li style="margin: 0.5em 0;">Horizontal rules</li>
+<li style="margin: 0.5em 0;">Mixed formatting</li>
+</ul>
+
+</body>
+</html>

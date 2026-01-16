@@ -10,11 +10,12 @@ const program = new Command();
 program
   .name('md2sp-html')
   .description('Convert Markdown files to HTML optimized for SharePoint with code block highlighting')
-  .version('1.1.0')
+  .version('1.2.0')
   .argument('<input>', 'Input markdown file path')
   .argument('[output]', 'Output HTML file path (optional, prints to stdout if not provided)')
   .option('-w, --wrap', 'Wrap output in basic HTML structure with <body> tag')
   .option('-t, --toc', 'Generate table of contents')
+  .option('-d, --dark-theme', 'Use dark theme for SharePoint (black/dark background)')
   .option('--toc-title <title>', 'Title for table of contents (default: "Table of Contents")')
   .action((input, output, options) => {
     try {
@@ -28,7 +29,8 @@ program
       const markdown = fs.readFileSync(inputPath, 'utf-8');
       const html = markdownToSharePointHTML(markdown, {
         includeTOC: options.toc || false,
-        tocTitle: options.tocTitle || 'Table of Contents'
+        tocTitle: options.tocTitle || 'Table of Contents',
+        theme: options.darkTheme ? 'dark' : 'light'
       });
 
       if (output) {

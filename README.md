@@ -8,6 +8,7 @@ A Node.js CLI tool that converts Markdown files to HTML optimized for SharePoint
 - **Syntax Highlighting**: Code blocks with highlight.js for 190+ languages
 - **Table of Contents**: Automatic TOC generation with clickable anchor links
 - **Anchor Links**: All headings have anchor IDs for internal page navigation
+- **Dark/Light Themes**: Theme support for SharePoint light or dark backgrounds
 - **SharePoint-Optimized**: Inline styles (no external CSS) and SharePoint-compatible class names
 - **CLI Tool**: Easy-to-use command-line interface
 - **Preserves Formatting**: All markdown elements properly styled for SharePoint's rich text editor
@@ -41,6 +42,18 @@ node bin/md2sp-html.js input.md output.html --toc
 
 # Convert with custom TOC title
 node bin/md2sp-html.js input.md output.html --toc --toc-title "Contents"
+
+# Use dark theme for SharePoint with dark/black background
+node bin/md2sp-html.js input.md output.html --dark-theme
+
+# Dark theme with TOC
+node bin/md2sp-html.js input.md output.html --dark-theme --toc
+
+# Combine with other options
+node bin/md2sp-html.js input.md output.html --toc --wrap
+
+# Dark theme with all options
+node bin/md2sp-html.js input.md output.html --dark-theme --toc --wrap
 ```
 
 ### Using the CLI
@@ -99,15 +112,42 @@ Open the generated `output.html` file in a browser or text editor.
 | Headings (H1-H6) | Styled headings with anchor IDs | Proper sizing, margins, borders, clickable navigation |
 | **Bold** / *Italic* | Styled text | Font weight and style applied |
 | `Inline code` | Styled code | Light background, monospace font |
-| Code blocks | Highlighted code | 190+ languages supported |
+| Code blocks (light theme) | Highlighted code | Light gray background (#f5f5f5) |
+| Code blocks (dark theme) | Highlighted code | Dark gray background (#1e1e1e) |
 | Ordered lists | Numbered lists | Proper nesting and spacing |
 | Unordered lists | Bulleted lists | Proper nesting and spacing |
 | [Links](url) | Styled links | Blue color, no underline, href preserved |
 | [TOC links](#heading) | Anchor links | Clickable internal navigation |
 | Images | Responsive images | Max-width, auto height |
-| > Blockquotes | Styled quotes | Left border, gray text |
-| Tables | Styled tables | Borders, padding, header styling |
+| > Blockquotes (light) | Styled quotes | Light gray text, gray border |
+| > Blockquotes (dark) | Styled quotes | Light gray text, dark border |
+| Tables (light theme) | Styled tables | Light gray borders, header styling |
+| Tables (dark theme) | Styled tables | Dark borders, dark header background |
 | Horizontal rules | Styled HR | Proper height and spacing |
+| Theme awareness | All elements | Adjusts colors based on --dark-theme flag |
+
+## Dark/Light Theme Support
+
+For SharePoint sites with black or dark backgrounds, use the `--dark-theme` flag:
+
+**Light Theme** (default):
+- Code blocks: Light gray background (#f5f5f5)
+- TOC: Light gray background (#f6f8fa)
+- Optimized for light SharePoint backgrounds
+
+**Dark Theme**:
+- Code blocks: Dark gray background (#1e1e1e)
+- TOC: Dark background (#2d3333)
+- Better contrast for black/dark SharePoint backgrounds
+
+Example:
+```bash
+# Light theme (default)
+node bin/md2sp-html.js input.md output.html
+
+# Dark theme for black backgrounds
+node bin/md2sp-html.js input.md output.html --dark-theme
+```
 
 ## Table of Contents (TOC)
 

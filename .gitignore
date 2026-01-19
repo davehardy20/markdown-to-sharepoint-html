@@ -3,4 +3,6 @@ node_modules/
 .DS_Store
 *.html
 !test-output.html
+!markdown-sharepoint-converter.html
+!test_sharepoint.html
 juice/

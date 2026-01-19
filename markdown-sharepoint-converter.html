@@ -1,0 +1,1093 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Markdown to SharePoint HTML Converter</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it-anchor@9.2.0/dist/markdownItAnchor.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it-toc-done-right@4.2.0/dist/markdownItTocDoneRight.umd.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: #f5f5f5;
+        color: #333;
+        padding: 20px;
+        line-height: 1.6;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+        opacity: 0.9;
+      }
+
+      .converter-container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      @media (min-width: 768px) {
+        .converter-container {
+          flex-direction: row;
+        }
+      }
+
+      .pane {
+        flex: 1;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .pane-header {
+        background: #f8f9fa;
+        padding: 15px 20px;
+        border-bottom: 1px solid #e9ecef;
+        font-weight: bold;
+        color: #495057;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .pane-content {
+        flex: 1;
+        padding: 20px;
+        overflow: auto;
+      }
+
+      #markdown-input {
+        width: 100%;
+        height: 100%;
+        border: none;
+        resize: none;
+        font-family: "Consolas", "Monaco", "Courier New", monospace;
+        font-size: 14px;
+        line-height: 1.5;
+        padding: 15px;
+      }
+
+      #html-output {
+        width: 100%;
+        height: 100%;
+        border: none;
+        resize: none;
+        font-family: "Consolas", "Monaco", "Courier New", monospace;
+        font-size: 14px;
+        line-height: 1.5;
+        padding: 15px;
+        background-color: #f8f9fa;
+      }
+
+      #html-output pre {
+        background-color: #f5f5f5;
+        padding: 15px;
+        border-radius: 5px;
+        overflow-x: auto;
+      }
+
+      .controls {
+        display: flex;
+        gap: 10px;
+        padding: 15px 20px;
+        background: #f8f9fa;
+        border-bottom: 1px solid #e9ecef;
+        flex-wrap: wrap;
+      }
+
+      .control-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-right: 15px;
+      }
+
+      label {
+        font-weight: 500;
+      }
+
+      select,
+      button {
+        padding: 8px 12px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        background: white;
+      }
+
+      button {
+        background: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-weight: 500;
+        transition: background-color 0.2s;
+      }
+
+      button:hover {
+        background: #0056b3;
+      }
+
+      .example-btn {
+        background: #28a745;
+      }
+
+      .example-btn:hover {
+        background: #1e7e34;
+      }
+
+      .clear-btn {
+        background: #dc3545;
+      }
+
+      .clear-btn:hover {
+        background: #c82333;
+      }
+
+      .theme-toggle {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .theme-toggle input {
+        width: 20px;
+        height: 20px;
+      }
+
+      .info-panel {
+        background: #e7f3ff;
+        border-left: 4px solid #007bff;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 5px 5px 0;
+      }
+
+      .info-panel h3 {
+        margin-bottom: 10px;
+        color: #007bff;
+      }
+
+      .info-panel ul {
+        padding-left: 20px;
+      }
+
+      .info-panel li {
+        margin-bottom: 8px;
+      }
+
+      footer {
+        text-align: center;
+        margin-top: 30px;
+        padding: 20px;
+        color: #6c757d;
+        font-size: 0.9rem;
+      }
+
+      .copy-btn {
+        background: #6c757d;
+        padding: 5px 10px;
+        font-size: 0.8rem;
+      }
+
+      .copy-btn:hover {
+        background: #545b62;
+      }
+
+      .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        background: #28a745;
+        color: white;
+        border-radius: 5px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        display: none;
+        z-index: 1000;
+      }
+
+      .loading {
+        text-align: center;
+        padding: 20px;
+        color: #6c757d;
+      }
+
+      .error-message {
+        color: red;
+        padding: 20px;
+        background: #fee;
+        border-radius: 5px;
+        border-left: 4px solid red;
+        margin: 10px 0;
+      }
+
+      .debug-info {
+        background: #f8f9fa;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 5px;
+        font-family: monospace;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Markdown to SharePoint HTML Converter</h1>
+        <p class="subtitle">
+          Convert Markdown to HTML optimized for SharePoint with syntax
+          highlighting
+        </p>
+      </header>
+
+      <div class="info-panel">
+        <h3>How to Use</h3>
+        <ul>
+          <li>Paste your Markdown content in left pane</li>
+          <li>
+            See the SharePoint-compatible HTML output in real-time in the right
+            pane
+          </li>
+          <li>Toggle between light and dark themes</li>
+          <li>Use example button to load sample content</li>
+          <li>Click "Copy HTML" to copy the output to your clipboard</li>
+        </ul>
+      </div>
+
+      <div class="controls">
+        <div class="control-group">
+          <label for="theme-select">Theme:</label>
+          <select id="theme-select">
+            <option value="light">Light Theme</option>
+            <option value="dark">Dark Theme</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <button id="example-btn" class="example-btn">
+            Load Example Content
+          </button>
+          <button id="clear-btn" class="clear-btn">Clear All</button>
+        </div>
+
+        <div class="control-group theme-toggle">
+          <input type="checkbox" id="auto-convert" checked />
+          <label for="auto-convert">Auto-convert</label>
+        </div>
+
+        <div class="control-group">
+          <button id="copy-btn" class="copy-btn">Copy HTML</button>
+        </div>
+      </div>
+
+      <div class="converter-container">
+        <div class="pane">
+          <div class="pane-header">
+            <span>Markdown Input</span>
+            <span id="markdown-char-count">0 characters</span>
+          </div>
+          <div class="pane-content">
+            <textarea
+              id="markdown-input"
+              placeholder="Paste your Markdown content here..."
+            >
+# Markdown to SharePoint HTML Converter
+
+## Features
+
+This tool converts Markdown to HTML optimized for SharePoint with:
+
+- **Syntax Highlighting**: Code blocks with highlight.js for 190+ languages
+- **SharePoint-Optimized**: Inline styles and SharePoint-compatible class names
+- **Table of Contents**: Automatic TOC generation with clickable anchor links
+- **Dark/Light Themes**: Theme support for different SharePoint backgrounds
+
+## Example Code
+
+### JavaScript
+
+```javascript
+function greet(name) {
+  console.log(`Hello, ${name}!`);
+}
+
+greet('World');
+```
+
+### Python
+
+```python
+def calculate_sum(a, b):
+    return a + b
+
+result = calculate_sum(5, 3)
+print(f"Result: {result}")
+```
+
+## Usage
+
+1. Paste Markdown content in the left pane
+2. See SharePoint-compatible HTML in the right pane
+3. Copy the output to use in SharePoint
+
+## Headings
+
+# H1 Heading
+## H2 Heading
+### H3 Heading
+#### H4 Heading
+##### H5 Heading
+###### H6 Heading
+
+## Formatting
+
+**Bold text** and *italic text* and `inline code`
+
+- Unordered list item 1
+- Unordered list item 2
+  - Nested item
+- Unordered list item 3
+
+1. Ordered list item 1
+2. Ordered list item 2
+
+> Blockquote content
+
+| Name | Type | Status |
+|------|------|--------|
+| Task 1 | High | Done |
+| Task 2 | Medium | In Progress |
+
+---
+
+This is a sample document to demonstrate Markdown to SharePoint HTML conversion capabilities.</textarea
+          </div>
+        </div>
+
+        <div class="pane">
+          <div class="pane-header">
+            <span>SharePoint HTML Output</span>
+            <span id="html-char-count">0 characters</span>
+          </div>
+          <div class="pane-content">
+            <div id="html-output-container">
+              <div class="loading">Loading converter...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer>
+        <p>
+          Markdown to SharePoint HTML Converter &copy; 2024 | All styling is
+          inline for SharePoint compatibility
+        </p>
+      </footer>
+    </div>
+
+    <div class="notification" id="notification">Copied to clipboard!</div>
+
+    <div id="debug-panel" style="display:none; position: fixed; bottom: 10px; right: 10px; background: white; padding: 10px; border: 2px solid #007bff; border-radius: 5px; max-width: 400px; max-height: 200px; overflow: auto; z-index: 9999; font-size: 11px;"></div>
+
+    <script>
+      // Global state
+      let isProcessing = false;
+      let librariesLoaded = false;
+      let currentTheme = "light";
+      let autoConvert = true;
+
+      // Simple HTML escape function
+      function escapeHtml(text) {
+        const map = {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#039;'
+        };
+        return text.replace(/[&<>"']/g, function(m) { return map[m]; });
+      }
+
+      // Debug function
+      function debugLog(message, data) {
+        const timestamp = new Date().toISOString().substr(11, 12);
+        const debugPanel = document.getElementById('debug-panel');
+        if (debugPanel) {
+          debugPanel.style.display = 'block';
+          const logEntry = document.createElement('div');
+          logEntry.style.borderBottom = '1px solid #eee';
+          logEntry.style.padding = '2px 0';
+          logEntry.innerHTML = `<strong>[${timestamp}]</strong> ${message}`;
+          if (data) {
+            logEntry.innerHTML += `<br><small>${JSON.stringify(data)}</small>`;
+          }
+          debugPanel.insertBefore(logEntry, debugPanel.firstChild);
+        }
+        console.log(`[DEBUG] ${message}`, data || '');
+      }
+
+      // Create converter function
+      function createSharePointMarkdownConverter(options = {}) {
+        const {
+          includeTOC = false,
+          tocTitle = "Table of Contents",
+          theme = "light",
+        } = options;
+
+        currentTheme = theme;
+        const isDarkTheme = theme === "dark";
+
+        const codeBlockBackground = isDarkTheme ? "#1e1e1e" : "#f5f5f5";
+        const codeBlockBorder = isDarkTheme ? "#4a5568" : "#666666";
+        const codeBlockPadding = isDarkTheme ? "16px" : "12px";
+
+        const md = new window.markdownit({
+          html: true,
+          linkify: true,
+          typographer: true,
+          highlight: function (str, lang) {
+            if (lang && window.hljs.getLanguage(lang)) {
+              try {
+                const highlighted = window.hljs.highlight(str, {
+                  language: lang,
+                  ignoreIllegals: true,
+                }).value;
+                return `<pre class="ms-rteElement-CodeHTML" style="border: 1px solid ${codeBlockBorder}; background-color: ${codeBlockBackground}; padding: ${codeBlockPadding}; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-${lang}" style="background-color: transparent; padding: 0; border: none; font-family: inherit;">${highlighted}</code></pre>`;
+              } catch (__) {}
+            }
+            return `<pre class="ms-rteElement-CodeHTML" style="border: 1px solid ${codeBlockBorder}; background-color: ${codeBlockBackground}; padding: ${codeBlockPadding}; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code style="background-color: transparent; padding: 0; border: none; font-family: inherit;">${escapeHtml(str)}</code></pre>`;
+          },
+        });
+
+        // Use markdown-it-anchor plugin
+        if (typeof window.markdownItAnchor === "function") {
+          md.use(window.markdownItAnchor, {
+            permalink: false,
+            slugify: (s) =>
+              s
+                .toLowerCase()
+                .replace(/\s+/g, "-")
+                .replace(/[^\w-]+/g, ""),
+            level: 1,
+            tabIndex: false,
+          });
+          debugLog('markdown-it-anchor plugin loaded');
+        } else {
+          debugLog('WARNING: markdown-it-anchor not available');
+        }
+
+        // Use markdown-it-toc-done-right plugin
+        if (includeTOC && typeof window.markdownItTocDoneRight === "function") {
+          md.use(window.markdownItTocDoneRight, {
+            tocTitle: `<h2 style="font-size: 1.5em; font-weight: bold; margin: 0.83em 0; border-bottom: 1px solid #eaecef; padding-bottom: 0.3em;">${tocTitle}</h2>`,
+            tocClassName: "markdown-it-toc",
+            listType: "ul",
+            level: [1, 2, 3],
+            listClassName: "markdown-it-toc-list",
+            itemClassName: "markdown-it-toc-item",
+            linkClassName: "markdown-it-toc-link",
+            callback: (html, ast) => {
+              return html;
+            },
+          });
+          debugLog('markdown-it-toc-done-right plugin loaded');
+        } else if (includeTOC) {
+          debugLog('WARNING: TOC requested but markdown-it-toc-done-right not available');
+        }
+
+        return md;
+      }
+
+      // Add inline styles to HTML output
+      function addInlineStyles(html, theme = "light") {
+        const isDarkTheme = theme === "dark";
+        const tocBackground = isDarkTheme ? "#2d3333" : "#f6f8fa";
+        const tocBorder = isDarkTheme ? "#4a5568" : "#dfe2e5";
+        const blockquoteColor = isDarkTheme ? "#adb5bd" : "#6a737d";
+        const blockquoteBorder = isDarkTheme ? "#4a5568" : "#dfe2e5";
+        const hrColor = isDarkTheme ? "#4b5563" : "#e1e4e8";
+        const headingBorder = isDarkTheme ? "#374151" : "#eaecef";
+        const tableHeaderBackground = isDarkTheme ? "#161b22" : "#f6f8fa";
+        const tableBorder = isDarkTheme ? "#4b5563" : "#dfe2e5";
+
+        const syntaxColors = {
+          keyword: isDarkTheme ? "#c678dd" : "#d73a49",
+          string: isDarkTheme ? "#a5d6ff" : "#032f62",
+          number: isDarkTheme ? "#79b6ff" : "#005cc5",
+          builtIn: isDarkTheme ? "#519bce" : "#e36209",
+          literal: isDarkTheme ? "#cb416b" : "#005cc5",
+          comment: isDarkTheme ? "#7f848e" : "#6a737d",
+          meta: isDarkTheme ? "#7f848e" : "#d7ba7d",
+          attribute: isDarkTheme ? "#d19a66" : "#005cc5",
+          variable: isDarkTheme ? "#d19a66" : "#24292e",
+          function: isDarkTheme ? "#61afef" : "#6f42c1",
+          title: isDarkTheme ? "#ffcd57" : "#6f42c1",
+          params: isDarkTheme ? "#8da8ce" : "#d73a49",
+          tag: isDarkTheme ? "#e2777a" : "#22863a",
+          name: isDarkTheme ? "#e2777a" : "#22863a",
+          punctuation: isDarkTheme ? "#586069" : "#24292e",
+          subst: isDarkTheme ? "#56b6c2" : "#005cc5",
+          property: isDarkTheme ? "#d19a66" : "#6f42c1",
+          operator: isDarkTheme ? "#c5a316" : "#d73a49",
+        };
+
+        const styleRules = [
+          {
+            pattern: /<h1>/g,
+            replacement: `<h1 style="font-size: 2em; font-weight: bold; margin: 0.67em 0; border-bottom: 1px solid ${headingBorder}; padding-bottom: 0.3em;">`,
+          },
+          {
+            pattern: /<h2>/g,
+            replacement: `<h2 style="font-size: 1.5em; font-weight: bold; margin: 0.83em 0; border-bottom: 1px solid ${headingBorder}; padding-bottom: 0.3em;">`,
+          },
+          {
+            pattern: /<h3>/g,
+            replacement:
+              '<h3 style="font-size: 1.17em; font-weight: bold; margin: 1em 0;">',
+          },
+          {
+            pattern: /<h4>/g,
+            replacement:
+              '<h4 style="font-size: 1em; font-weight: bold; margin: 1.33em 0;">',
+          },
+          {
+            pattern: /<h5>/g,
+            replacement:
+              '<h5 style="font-size: 0.83em; font-weight: bold; margin: 1.67em 0;">',
+          },
+          {
+            pattern: /<h6>/g,
+            replacement:
+              '<h6 style="font-size: 0.67em; font-weight: bold; margin: 2.33em 0;">',
+          },
+          {
+            pattern: /<blockquote>/g,
+            replacement: `<blockquote style="border-left: 4px solid ${blockquoteBorder}; padding: 0 1em; color: ${blockquoteColor}; margin: 1em 0;">`,
+          },
+          {
+            pattern: /<table>/g,
+            replacement:
+              '<table style="border-collapse: collapse; width: 100%; margin: 1em 0; border-spacing: 0;">',
+          },
+          {
+            pattern: /<th>/g,
+            replacement: `<th style="border: 1px solid ${tableBorder}; padding: 6px 13px; font-weight: bold; background-color: ${tableHeaderBackground};">`,
+          },
+          {
+            pattern: /<td>/g,
+            replacement: `<td style="border: 1px solid ${tableBorder}; padding: 6px 13px;">`,
+          },
+          {
+            pattern: /<hr>/g,
+            replacement: `<hr style="height: 0.25em; padding: 0; margin: 24px 0; background-color: ${hrColor}; border: 0;">`,
+          },
+          {
+            pattern: /<p>/g,
+            replacement: '<p style="margin: 1em 0; line-height: 1.6;">',
+          },
+          {
+            pattern: /<strong>/g,
+            replacement: '<strong style="font-weight: bold;">',
+          },
+          {
+            pattern: /<b>/g,
+            replacement: '<b style="font-weight: bold;">',
+          },
+          {
+            pattern: /<em>/g,
+            replacement: '<em style="font-style: italic;">',
+          },
+          {
+            pattern: /<i>/g,
+            replacement: '<i style="font-style: italic;">',
+          },
+          {
+            pattern: /<a([^>]*?)>/g,
+            replacement: '<a$1 style="color: #0366d6; text-decoration: none;">',
+          },
+          {
+            pattern: /<ul>/g,
+            replacement: '<ul style="padding-left: 2em; margin: 1em 0;">',
+          },
+          {
+            pattern: /<ol>/g,
+            replacement: '<ol style="padding-left: 2em; margin: 1em 0;">',
+          },
+          {
+            pattern: /<li>/g,
+            replacement: '<li style="margin: 0.5em 0;">',
+          },
+          {
+            pattern: /<img([^>]*?)>/g,
+            replacement:
+              '<img$1 style="max-width: 100%; height: auto; display: block; margin: 1em 0;">',
+          },
+          {
+            pattern: /<code>/g,
+            replacement: `<code style="background-color: ${isDarkTheme ? "rgba(255, 255, 255, 0.1)" : "rgba(27, 31, 35, 0.05)"}; padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">`,
+          },
+          {
+            pattern: /<div class="markdown-it-toc">/g,
+            replacement: `<div class="markdown-it-toc" style="background-color: ${tocBackground}; border: 1px solid ${tocBorder}; padding: 16px; margin: 20px 0; border-radius: 6px;">`,
+          },
+          {
+            pattern: /<ul class="markdown-it-toc-list">/g,
+            replacement:
+              '<ul class="markdown-it-toc-list" style="padding-left: 0; margin: 10px 0;">',
+          },
+          {
+            pattern: /<li class="markdown-it-toc-item">/g,
+            replacement:
+              '<li class="markdown-it-toc-item" style="margin: 8px 0;">',
+          },
+          {
+            pattern: /<a class="markdown-it-toc-link"/g,
+            replacement:
+              '<a class="markdown-it-toc-link" style="color: #0366d6; text-decoration: none; font-weight: 500;">',
+          },
+          {
+            pattern: /<span class="hljs-keyword">/g,
+            replacement: `<span class="hljs-keyword" style="color: ${syntaxColors.keyword};">`,
+          },
+          {
+            pattern: /<span class="hljs-string">/g,
+            replacement: `<span class="hljs-string" style="color: ${syntaxColors.string};">`,
+          },
+          {
+            pattern: /<span class="hljs-number">/g,
+            replacement: `<span class="hljs-number" style="color: ${syntaxColors.number};">`,
+          },
+          {
+            pattern: /<span class="hljs-built_in">/g,
+            replacement: `<span class="hljs-built_in" style="color: ${syntaxColors.builtIn};">`,
+          },
+          {
+            pattern: /<span class="hljs-literal">/g,
+            replacement: `<span class="hljs-literal" style="color: ${syntaxColors.literal};">`,
+          },
+          {
+            pattern: /<span class="hljs-comment">/g,
+            replacement: `<span class="hljs-comment" style="color: ${syntaxColors.comment};">`,
+          },
+          {
+            pattern: /<span class="hljs-title">/g,
+            replacement: `<span class="hljs-title" style="color: ${syntaxColors.title};">`,
+          },
+          {
+            pattern: /<span class="hljs-params">/g,
+            replacement: `<span class="hljs-params" style="color: ${syntaxColors.params};">`,
+          },
+          {
+            pattern: /<span class="hljs-attribute">/g,
+            replacement: `<span class="hljs-attribute" style="color: ${syntaxColors.attribute};">`,
+          },
+          {
+            pattern: /<span class="hljs-variable">/g,
+            replacement: `<span class="hljs-variable" style="color: ${syntaxColors.variable};">`,
+          },
+          {
+            pattern: /<span class="hljs-function">/g,
+            replacement: `<span class="hljs-function" style="color: ${syntaxColors.function};">`,
+          },
+          {
+            pattern: /<span class="hljs-tag">/g,
+            replacement: `<span class="hljs-tag" style="color: ${syntaxColors.tag};">`,
+          },
+          {
+            pattern: /<span class="hljs-name">/g,
+            replacement: `<span class="hljs-name" style="color: ${syntaxColors.name};">`,
+          },
+          {
+            pattern: /<span class="hljs-punctuation">/g,
+            replacement: `<span class="hljs-punctuation" style="color: ${syntaxColors.punctuation};">`,
+          },
+          {
+            pattern: /<span class="hljs-subst">/g,
+            replacement: `<span class="hljs-subst" style="color: ${syntaxColors.subst};">`,
+          },
+          {
+            pattern: /<span class="hljs-property">/g,
+            replacement: `<span class="hljs-property" style="color: ${syntaxColors.property};">`,
+          },
+          {
+            pattern: /<span class="hljs-operator">/g,
+            replacement: `<span class="hljs-operator" style="color: ${syntaxColors.operator};">`,
+          },
+        ];
+
+        let styledHTML = html;
+        styleRules.forEach((rule) => {
+          styledHTML = styledHTML.replace(rule.pattern, rule.replacement);
+        });
+
+        return styledHTML;
+      }
+
+      // Convert markdown to HTML
+      function convertMarkdownToHTML() {
+        // Prevent rapid processing
+        if (isProcessing || !librariesLoaded) {
+          debugLog('Skipping conversion', { isProcessing, librariesLoaded });
+          return;
+        }
+        isProcessing = true;
+
+        try {
+          const markdownInput = document.getElementById("markdown-input");
+          const themeSelect = document.getElementById("theme-select");
+          const outputContainer = document.getElementById("html-output-container");
+
+          if (!markdownInput || !themeSelect || !outputContainer) {
+            debugLog('ERROR: Required DOM elements not found!', {
+              markdownInput: !!markdownInput,
+              themeSelect: !!themeSelect,
+              outputContainer: !!outputContainer
+            });
+            isProcessing = false;
+            return;
+          }
+
+          const markdown = markdownInput.value;
+          const theme = themeSelect.value;
+
+          debugLog("Converting markdown...", { theme, length: markdown.length });
+
+          const md = createSharePointMarkdownConverter({ theme: theme });
+          let html = md.render(markdown);
+          html = addInlineStyles(html, theme);
+
+          debugLog("Conversion complete, updating output...", { outputLength: html.length });
+
+          // Clear loading message and display result
+          outputContainer.innerHTML = "";
+
+          // Create pre element with HTML content
+          const preElement = document.createElement("pre");
+          preElement.textContent = html;
+          outputContainer.appendChild(preElement);
+
+          // Update character counts
+          const markdownCharCount = document.getElementById("markdown-char-count");
+          const htmlCharCount = document.getElementById("html-char-count");
+          if (markdownCharCount) markdownCharCount.textContent = `${markdown.length} characters`;
+          if (htmlCharCount) htmlCharCount.textContent = `${html.length} characters`;
+
+          debugLog('Output updated successfully');
+        } catch (error) {
+          debugLog("Conversion error:", { message: error.message, stack: error.stack });
+          const outputContainer = document.getElementById("html-output-container");
+          if (outputContainer) {
+            outputContainer.innerHTML =
+              `<div class="error-message"><strong>Error:</strong> ${error.message}<br><pre style="background: #f8f9fa; padding: 10px; margin-top: 10px;">${error.stack}</pre></div>`;
+          }
+        } finally {
+          isProcessing = false;
+        }
+      }
+
+      // Load example content
+      function loadExampleContent() {
+        const exampleContent = `# Markdown to SharePoint HTML Converter
+
+## Features
+
+This tool converts Markdown to HTML optimized for SharePoint with:
+
+- **Syntax Highlighting**: Code blocks with highlight.js for 190+ languages
+- **SharePoint-Optimized**: Inline styles and SharePoint-compatible class names
+- **Table of Contents**: Automatic TOC generation with clickable anchor links
+- **Dark/Light Themes**: Theme support for different SharePoint backgrounds
+
+## Example Code
+
+### JavaScript
+
+\`\`\`javascript
+function greet(name) {
+  console.log(\`Hello, \${name}!\`);
+}
+
+greet('World');
+\`\`\`
+
+### Python
+
+\`\`\`python
+def calculate_sum(a, b):
+    return a + b
+
+result = calculate_sum(5, 3)
+print(f"Result: {result}")
+\`\`\`
+
+## Usage
+
+1. Paste Markdown content in the left pane
+2. See SharePoint-compatible HTML in the right pane
+3. Copy the output to use in SharePoint
+
+## Headings
+
+# H1 Heading
+## H2 Heading
+### H3 Heading
+#### H4 Heading
+##### H5 Heading
+###### H6 Heading
+
+## Formatting
+
+**Bold text** and *italic text* and \`inline code\`
+
+- Unordered list item 1
+- Unordered list item 2
+  - Nested item
+- Unordered list item 3
+
+1. Ordered list item 1
+2. Ordered list item 2
+
+> Blockquote content
+
+| Name | Type | Status |
+|------|------|--------|
+| Task 1 | High | Done |
+| Task 2 | Medium | In Progress |
+
+---
+
+This is a sample document to demonstrate Markdown to SharePoint HTML conversion capabilities.`;
+
+        const markdownInput = document.getElementById("markdown-input");
+        if (markdownInput) {
+          markdownInput.value = exampleContent;
+          debugLog('Example content loaded');
+          convertMarkdownToHTML();
+        }
+      }
+
+      // Clear all content
+      function clearAll() {
+        const markdownInput = document.getElementById("markdown-input");
+        const outputContainer = document.getElementById("html-output-container");
+        const markdownCharCount = document.getElementById("markdown-char-count");
+        const htmlCharCount = document.getElementById("html-char-count");
+
+        if (markdownInput) markdownInput.value = "";
+        if (outputContainer) outputContainer.innerHTML = '<div class="loading">Loading converter...</div>';
+        if (markdownCharCount) markdownCharCount.textContent = "0 characters";
+        if (htmlCharCount) htmlCharCount.textContent = "0 characters";
+        debugLog('Content cleared');
+      }
+
+      // Copy HTML to clipboard
+      function copyToClipboard() {
+        const outputContainer = document.getElementById("html-output-container");
+        if (!outputContainer) {
+          debugLog('ERROR: output container not found for copy');
+          return;
+        }
+
+        const textArea = document.createElement("textarea");
+        textArea.value = outputContainer.innerText || outputContainer.textContent;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textArea);
+
+        // Show notification
+        const notification = document.getElementById("notification");
+        if (notification) {
+          notification.style.display = "block";
+          setTimeout(() => {
+            notification.style.display = "none";
+          }, 2000);
+        }
+        debugLog('HTML copied to clipboard');
+      }
+
+      // Initialize application
+      function init() {
+        debugLog('Starting initialization...');
+
+        // Check if libraries are loaded with better timeout handling
+        let checkAttempts = 0;
+        const maxAttempts = 50;
+
+        function checkLibraries() {
+          checkAttempts++;
+
+          // Debug: Log what we have
+          if (checkAttempts === 1 || checkAttempts % 10 === 0) {
+            debugLog(`Library check attempt ${checkAttempts}/${maxAttempts}`, {
+              markdownit: typeof window.markdownit,
+              markdownItAnchor: typeof window.markdownItAnchor,
+              markdownItTocDoneRight: typeof window.markdownItTocDoneRight,
+              hljs: typeof window.hljs
+            });
+          }
+
+          // Check if all libraries are loaded
+          const hasMarkdownIt = typeof window.markdownit === "function";
+          const hasAnchor = typeof window.markdownItAnchor === "function";
+          const hasHLJS = typeof window.hljs === "object";
+
+          if (hasMarkdownIt && hasAnchor && hasHLJS) {
+            librariesLoaded = true;
+            debugLog('All libraries loaded successfully!');
+            initializeApp();
+          } else if (checkAttempts < maxAttempts) {
+            setTimeout(checkLibraries, 100);
+          } else {
+            // If libraries still not loaded, show error with details
+            const missingLibs = [];
+            if (!hasMarkdownIt) missingLibs.push("markdown-it");
+            if (!hasAnchor) missingLibs.push("markdown-it-anchor");
+            if (!hasHLJS) missingLibs.push("highlight.js");
+
+            debugLog('Library loading failed!', { missingLibs });
+
+            const outputContainer = document.getElementById("html-output-container");
+            if (outputContainer) {
+              outputContainer.innerHTML =
+                '<div class="error-message">' +
+                '<strong>Error:</strong> Required libraries failed to load.<br>' +
+                'Missing: ' + missingLibs.join(', ') + '<br>' +
+                'Please check your internet connection and refresh the page.<br>' +
+                '<small>Open browser console (F12) for more details.</small>' +
+                '</div>';
+            }
+          }
+        }
+
+        checkLibraries();
+      }
+
+      function initializeApp() {
+        debugLog('Initializing app...');
+
+        // Set up event listeners with proper error handling
+        const markdownInput = document.getElementById("markdown-input");
+        const themeSelect = document.getElementById("theme-select");
+        const exampleBtn = document.getElementById("example-btn");
+        const clearBtn = document.getElementById("clear-btn");
+        const copyBtn = document.getElementById("copy-btn");
+        const autoConvertCheckbox = document.getElementById("auto-convert");
+
+        // Verify all elements exist
+        if (!markdownInput || !themeSelect || !exampleBtn || !clearBtn || !copyBtn || !autoConvertCheckbox) {
+          debugLog('ERROR: Some DOM elements not found!', {
+            markdownInput: !!markdownInput,
+            themeSelect: !!themeSelect,
+            exampleBtn: !!exampleBtn,
+            clearBtn: !!clearBtn,
+            copyBtn: !!copyBtn,
+            autoConvertCheckbox: !!autoConvertCheckbox
+          });
+          return;
+        }
+
+        debugLog('All DOM elements found');
+
+        // Add event listeners
+        markdownInput.addEventListener("input", function () {
+          debugLog('Input event triggered');
+          if (autoConvert && librariesLoaded) {
+            convertMarkdownToHTML();
+          }
+        });
+
+        markdownInput.addEventListener("paste", function () {
+          debugLog('Paste event triggered');
+          setTimeout(() => {
+            if (autoConvert && librariesLoaded) {
+              convertMarkdownToHTML();
+            }
+          }, 10);
+        });
+
+        themeSelect.addEventListener("change", function () {
+          debugLog('Theme changed');
+          if (librariesLoaded) {
+            convertMarkdownToHTML();
+          }
+        });
+
+        exampleBtn.addEventListener("click", function() {
+          debugLog('Example button clicked');
+          loadExampleContent();
+        });
+
+        clearBtn.addEventListener("click", function() {
+          debugLog('Clear button clicked');
+          clearAll();
+        });
+
+        copyBtn.addEventListener("click", function() {
+          debugLog('Copy button clicked');
+          copyToClipboard();
+        });
+
+        autoConvertCheckbox.addEventListener("change", function () {
+          autoConvert = this.checked;
+          debugLog('Auto-convert toggled', autoConvert);
+          if (autoConvert && librariesLoaded) {
+            convertMarkdownToHTML();
+          }
+        });
+
+        debugLog('Event listeners set up');
+
+        // Initial conversion with small delay to ensure everything is ready
+        if (librariesLoaded) {
+          setTimeout(() => {
+            debugLog("Starting initial conversion...");
+            convertMarkdownToHTML();
+          }, 100);
+        }
+      }
+
+      // Start application when page loads
+      window.addEventListener("load", function() {
+        debugLog('Page loaded, starting init...');
+        init();
+      });
+    </script>
+  </body>
+</html>

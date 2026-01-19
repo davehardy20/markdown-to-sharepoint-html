@@ -1,0 +1,1103 @@
+<h1 id="mastering-tmux-the-ultimate-terminal-environment-for-security-professionals">Mastering Tmux: The Ultimate Terminal Environment for Security Professionals</h1>
+<h2 id="table-of-contents">Table of Contents</h2>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;"><a href="#overview" style="color: #0366d6; text-decoration: none;">Overview</a>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;"><a href="#the-problem-tmux-solves-for-security-professionals" style="color: #0366d6; text-decoration: none;">The Problem Tmux Solves for Security Professionals</a></li>
+<li style="margin: 0.5em 0;"><a href="#key-benefits-for-security-work" style="color: #0366d6; text-decoration: none;">Key Benefits for Security Work</a></li>
+</ul>
+</li>
+<li style="margin: 0.5em 0;"><a href="#prerequisites" style="color: #0366d6; text-decoration: none;">Prerequisites</a></li>
+<li style="margin: 0.5em 0;"><a href="#installation" style="color: #0366d6; text-decoration: none;">Installation</a>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;"><a href="#1-install-tmux-plugin-manager-tpm" style="color: #0366d6; text-decoration: none;">1. Install Tmux Plugin Manager (TPM)</a></li>
+<li style="margin: 0.5em 0;"><a href="#2-configure-tmuxconf" style="color: #0366d6; text-decoration: none;">2. Configure <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">.tmux.conf</code></a></li>
+<li style="margin: 0.5em 0;"><a href="#3-apply-configuration" style="color: #0366d6; text-decoration: none;">3. Apply Configuration</a></li>
+<li style="margin: 0.5em 0;"><a href="#4-install-plugins" style="color: #0366d6; text-decoration: none;">4. Install Plugins</a></li>
+</ul>
+</li>
+<li style="margin: 0.5em 0;"><a href="#logging-capabilities" style="color: #0366d6; text-decoration: none;">Logging Capabilities</a>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;"><a href="#mode-1-real-time-activity-logging" style="color: #0366d6; text-decoration: none;">Mode 1: Real-Time Activity Logging</a></li>
+<li style="margin: 0.5em 0;"><a href="#mode-2-screen-capture" style="color: #0366d6; text-decoration: none;">Mode 2: Screen Capture</a></li>
+<li style="margin: 0.5em 0;"><a href="#mode-3-complete-history-export" style="color: #0366d6; text-decoration: none;">Mode 3: Complete History Export</a></li>
+<li style="margin: 0.5em 0;"><a href="#mode-4-clear-pane-history" style="color: #0366d6; text-decoration: none;">Mode 4: Clear Pane History</a></li>
+</ul>
+</li>
+<li style="margin: 0.5em 0;"><a href="#search-and-navigation" style="color: #0366d6; text-decoration: none;">Search and Navigation</a>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;"><a href="#copy-mode" style="color: #0366d6; text-decoration: none;">Copy Mode</a></li>
+</ul>
+</li>
+<li style="margin: 0.5em 0;"><a href="#security-considerations" style="color: #0366d6; text-decoration: none;">Security Considerations</a>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;"><a href="#data-protection" style="color: #0366d6; text-decoration: none;">Data Protection</a></li>
+<li style="margin: 0.5em 0;"><a href="#operational-security" style="color: #0366d6; text-decoration: none;">Operational Security</a></li>
+</ul>
+</li>
+<li style="margin: 0.5em 0;"><a href="#quick-reference" style="color: #0366d6; text-decoration: none;">Quick Reference</a>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;"><a href="#key-bindings-summary" style="color: #0366d6; text-decoration: none;">Key Bindings Summary</a></li>
+<li style="margin: 0.5em 0;"><a href="#file-naming-convention" style="color: #0366d6; text-decoration: none;">File Naming Convention</a></li>
+</ul>
+</li>
+<li style="margin: 0.5em 0;"><a href="#best-practices" style="color: #0366d6; text-decoration: none;">Best Practices</a>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;"><a href="#1-always-start-logging-early" style="color: #0366d6; text-decoration: none;">1. Always Start Logging Early</a></li>
+<li style="margin: 0.5em 0;"><a href="#2-use-descriptive-session-names" style="color: #0366d6; text-decoration: none;">2. Use Descriptive Session Names</a></li>
+<li style="margin: 0.5em 0;"><a href="#3-regular-screen-captures-for-documentation" style="color: #0366d6; text-decoration: none;">3. Regular Screen Captures for Documentation</a></li>
+<li style="margin: 0.5em 0;"><a href="#4-export-history-periodically" style="color: #0366d6; text-decoration: none;">4. Export History Periodically</a></li>
+<li style="margin: 0.5em 0;"><a href="#5-secure-log-storage" style="color: #0366d6; text-decoration: none;">5. Secure Log Storage</a></li>
+<li style="margin: 0.5em 0;"><a href="#6-maintain-log-hygiene" style="color: #0366d6; text-decoration: none;">6. Maintain Log Hygiene</a></li>
+<li style="margin: 0.5em 0;"><a href="#7-document-methodology-using-logs" style="color: #0366d6; text-decoration: none;">7. Document Methodology Using Logs</a></li>
+</ul>
+</li>
+<li style="margin: 0.5em 0;"><a href="#troubleshooting" style="color: #0366d6; text-decoration: none;">Troubleshooting</a>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;"><a href="#plugins-not-loading" style="color: #0366d6; text-decoration: none;">Plugins Not Loading</a></li>
+<li style="margin: 0.5em 0;"><a href="#logs-not-appearing" style="color: #0366d6; text-decoration: none;">Logs Not Appearing</a></li>
+<li style="margin: 0.5em 0;"><a href="#search-not-working-in-copy-mode" style="color: #0366d6; text-decoration: none;">Search Not Working in Copy Mode</a></li>
+</ul>
+</li>
+<li style="margin: 0.5em 0;"><a href="#additional-resources" style="color: #0366d6; text-decoration: none;">Additional Resources</a></li>
+<li style="margin: 0.5em 0;"><a href="#changelog" style="color: #0366d6; text-decoration: none;">Changelog</a></li>
+</ul>
+<hr style="height: 0.25em; padding: 0; margin: 24px 0; background-color: #4b5563; border: 0;">
+<h2 id="overview">Overview</h2>
+<p style="margin: 1em 0; line-height: 1.6;">As security professionals, we spend countless hours in the terminal—conducting penetration tests, responding to incidents, analyzing malware, and managing infrastructure. Terminal multiplexers like Tmux aren’t just productivity tools; they’re essential infrastructure that can dramatically enhance your workflow, improve documentation quality, and ensure critical activities are never lost to accidental disconnections.</p>
+<p style="margin: 1em 0; line-height: 1.6;">This comprehensive guide walks through configuring Tmux specifically for security operations, with an emphasis on automated logging, session persistence, and operational security. Whether you’re conducting a penetration test, performing incident response, or managing security infrastructure, this configuration will transform how you work in the terminal.</p>
+<h3 id="the-problem-tmux-solves-for-security-professionals">The Problem Tmux Solves for Security Professionals</h3>
+<p style="margin: 1em 0; line-height: 1.6;">Have you ever lost hours of work because your SSH session dropped? Needed to share exactly what commands you ran during an assessment? Wanted to document findings without breaking your workflow? Or perhaps you’ve struggled to keep track of multiple parallel tasks across different systems?</p>
+<p style="margin: 1em 0; line-height: 1.6;">Tmux addresses all these challenges and more:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Session Persistence</strong>: Maintain terminal sessions across disconnections, VPN drops, or system reboots. Start a penetration test in the morning, close your laptop, and return to the exact same state hours later.</p>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Activity Logging</strong>: Automatically capture every command and output with zero effort. This creates an irrefutable audit trail perfect for documentation, compliance, or demonstrating methodology in penetration testing reports.</p>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">History Preservation</strong>: Save and search through complete command histories from entire sessions. When you need to reference or reconstruct what you did hours or days ago, everything is available.</p>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Flexible Workflows</strong>: Use multi-pane layouts to run parallel security tools side-by-side—have nmap scanning, Burp Suite intercepting, and a shell session active simultaneously.</p>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Screen Capture</strong>: Generate textual screenshots of terminal output instantly. Perfect for documenting vulnerabilities, capturing evidence, or creating technical documentation.</p>
+</li>
+</ul>
+<h3 id="key-benefits-for-security-work">Key Benefits for Security Work</h3>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Session Persistence</strong>: Never lose work to network issues again. Tmux sessions run in the background, detached from your terminal window. You can reconnect from anywhere and pick up exactly where you left off.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Activity Logging</strong>: Automated logging captures every keystroke and output, creating comprehensive audit trails without manual effort. This is invaluable for penetration testing documentation, incident response records, and compliance requirements.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">History Preservation</strong>: Complete command histories are preserved and searchable, enabling you to quickly reference previous commands, analyze your methodology, or reproduce results.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Flexible Workflows</strong>: Multi-pane and multi-window layouts let you run parallel operations. Have your reconnaissance, exploitation, and post-exploitation activities all visible simultaneously, switching between them with keyboard shortcuts.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Screen Capture</strong>: Instant textual screenshots of terminal output eliminate the need for manual transcription. Perfect for documentation, evidence collection, and reporting.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><a href="#table-of-contents" style="color: #0366d6; text-decoration: none;">← Back to Table of Contents</a></p>
+<hr style="height: 0.25em; padding: 0; margin: 24px 0; background-color: #4b5563; border: 0;">
+<h2 id="prerequisites">Prerequisites</h2>
+<p style="margin: 1em 0; line-height: 1.6;">Before diving into the configuration, ensure you have the following:</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Operating System Compatibility</strong>: This setup works seamlessly on Linux, macOS, and Windows (via Cygwin or WSL). The configuration and plugins are cross-platform, ensuring consistent behavior across your workstations.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Git Installation</strong>: Git is required to install Tmux Plugin Manager (TPM). If you don’t have Git installed, use your package manager:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Debian/Ubuntu: <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">sudo apt install git</code></li>
+<li style="margin: 0.5em 0;">macOS: <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">brew install git</code></li>
+<li style="margin: 0.5em 0;">Fedora/Red Hat: <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">sudo dnf install git</code></li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Tmux Installation</strong>: Obviously, you’ll need Tmux itself. Install it via your package manager:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Debian/Ubuntu: <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">sudo apt install tmux</code></li>
+<li style="margin: 0.5em 0;">macOS: <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">brew install tmux</code></li>
+<li style="margin: 0.5em 0;">Fedora/Red Hat: <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">sudo dnf install tmux</code></li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Terminal Emulator</strong>: While Tmux works in most terminal emulators, modern terminals like iTerm2, Alacritty, or the Windows Terminal provide better support for 256-color themes, Unicode characters, and advanced features.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><a href="#table-of-contents" style="color: #0366d6; text-decoration: none;">← Back to Table of Contents</a></p>
+<hr style="height: 0.25em; padding: 0; margin: 24px 0; background-color: #4b5563; border: 0;">
+<h2 id="installation">Installation</h2>
+<p style="margin: 1em 0; line-height: 1.6;">The installation process is straightforward but critical to get right. Follow these steps carefully to ensure a fully functional Tmux environment optimized for security work.</p>
+<h3 id="1-install-tmux-plugin-manager-tpm">1. Install Tmux Plugin Manager (TPM)</h3>
+<p style="margin: 1em 0; line-height: 1.6;">TPM is a plugin manager that simplifies installing and updating Tmux plugins. It’s maintained by the same community that develops many of the best Tmux plugins.</p>
+<p style="margin: 1em 0; line-height: 1.6;">Execute the following command to clone the TPM repository:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;">git <span class="hljs-built_in" style="color: #519bce;">clone</span> https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;">This creates the TPM directory structure in your home directory, which is the standard location for Tmux plugins and configurations.</p>
+<h3 id="2-configure-tmuxconf">2. Configure <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">.tmux.conf</code></h3>
+<p style="margin: 1em 0; line-height: 1.6;">The <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">.tmux.conf</code> file is Tmux’s configuration file, typically located in your home directory. If it doesn’t exist, create it. This configuration includes essential plugins and optimizations specifically chosen for security workflows.</p>
+<p style="margin: 1em 0; line-height: 1.6;">Add the following configuration to your <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">~/.tmux.conf</code> file:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-comment" style="color: #7f848e;"># ========== PLUGINS ==========</span>
+<span class="hljs-comment" style="color: #7f848e;"># Core plugin manager - required for all other plugins</span>
+<span class="hljs-built_in" style="color: #519bce;">set</span> -g @plugin <span class="hljs-string" style="color: #a5d6ff;">&#x27;tmux-plugins/tpm&#x27;</span>
+
+<span class="hljs-comment" style="color: #7f848e;"># Automated logging - captures all output for audit trails</span>
+<span class="hljs-built_in" style="color: #519bce;">set</span> -g @plugin <span class="hljs-string" style="color: #a5d6ff;">&#x27;tmux-plugins/tmux-logging&#x27;</span>
+
+<span class="hljs-comment" style="color: #7f848e;"># Session persistence - saves and restores Tmux sessions</span>
+<span class="hljs-built_in" style="color: #519bce;">set</span> -g @plugin <span class="hljs-string" style="color: #a5d6ff;">&#x27;tmux-plugins/tmux-resurrect&#x27;</span>
+
+<span class="hljs-comment" style="color: #7f848e;"># Enhanced navigation - fuzzy search through scrollback history</span>
+<span class="hljs-built_in" style="color: #519bce;">set</span> -g @plugin <span class="hljs-string" style="color: #a5d6ff;">&#x27;roosta/tmux-fuzzback&#x27;</span>
+
+<span class="hljs-comment" style="color: #7f848e;"># Continuum - automatic session restoration (optional)</span>
+<span class="hljs-comment" style="color: #7f848e;"># Uncomment to auto-start Tmux on login</span>
+<span class="hljs-comment" style="color: #7f848e;">#set -g @plugin &#x27;tmux-plugins/tmux-continuum&#x27;</span>
+
+<span class="hljs-comment" style="color: #7f848e;"># ========== CONTINUUM (OPTIONAL) ==========</span>
+<span class="hljs-comment" style="color: #7f848e;"># Continuum automatically saves Tmux sessions and can restore them</span>
+<span class="hljs-comment" style="color: #7f848e;"># when you start a new terminal. This is useful for always-on workflows.</span>
+<span class="hljs-comment" style="color: #7f848e;"># Uncomment the following line to auto-start Tmux on login:</span>
+<span class="hljs-comment" style="color: #7f848e;">#set -g @continuum-boot &#x27;on&#x27;</span>
+
+<span class="hljs-comment" style="color: #7f848e;"># ========== HISTORY LIMIT ==========</span>
+<span class="hljs-comment" style="color: #7f848e;"># The scrollback buffer determines how many lines of history Tmux retains.</span>
+<span class="hljs-comment" style="color: #7f848e;"># Higher values mean you can capture more history, but use more memory.</span>
+<span class="hljs-comment" style="color: #7f848e;"># 50000 lines is a good balance for modern systems.</span>
+<span class="hljs-built_in" style="color: #519bce;">set</span> -g history-limit 50000
+
+<span class="hljs-comment" style="color: #7f848e;"># ========== PLUGIN MANAGER ==========</span>
+<span class="hljs-comment" style="color: #7f848e;"># This line initializes TPM and must be at the very bottom of your config.</span>
+<span class="hljs-comment" style="color: #7f848e;"># It loads all the plugins specified above.</span>
+run <span class="hljs-string" style="color: #a5d6ff;">&#x27;~/.tmux/plugins/tpm/tpm&#x27;</span>
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Configuration Notes</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">History Limit</strong>: The <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">history-limit</code> setting is critical for security work. A value of 50,000 lines ensures you can capture complete session histories for later export. Modern systems handle this easily without performance issues.</p>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Continuum Plugin</strong>: This plugin (currently commented out) provides automatic session saving and restoration. It’s useful if you want Tmux sessions to persist across reboots, but may be overkill for simple workflows.</p>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Plugin Selection</strong>: These four plugins (tpm, tmux-logging, tmux-resurrect, tmux-fuzzback) provide a comprehensive foundation for security work. Each serves a specific purpose and integrates seamlessly.</p>
+</li>
+</ul>
+<h3 id="3-apply-configuration">3. Apply Configuration</h3>
+<p style="margin: 1em 0; line-height: 1.6;">After creating or updating your <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">.tmux.conf</code> file, you need to reload the configuration for changes to take effect. There are two ways to do this:</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">From within an existing Tmux session</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;">tmux <span class="hljs-built_in" style="color: #519bce;">source</span> ~/.tmux.conf
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">From outside Tmux</strong> (if you’re not in a session):</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;">tmux new-session -d -s temp <span class="hljs-string" style="color: #a5d6ff;">&quot;tmux source ~/.tmux.conf; exec bash&quot;</span>
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;">This reloads the configuration without disrupting your current Tmux sessions.</p>
+<h3 id="4-install-plugins">4. Install Plugins</h3>
+<p style="margin: 1em 0; line-height: 1.6;">Once your configuration is loaded, install the specified plugins using TPM:</p>
+<ol style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Ensure you’re inside a Tmux session. If not, start one: <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">tmux</code></li>
+<li style="margin: 0.5em 0;">Press the prefix key (default: <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Ctrl + b</code>), then press <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Shift + I</code> (capital ‘I’)</li>
+<li style="margin: 0.5em 0;">You’ll see notifications at the bottom of the screen indicating which plugins are being installed</li>
+<li style="margin: 0.5em 0;">Wait for the “done” notification, indicating all plugins are installed</li>
+</ol>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Understanding the Prefix</strong>: The Tmux prefix key (default <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Ctrl + b</code>) is your gateway to all Tmux commands. Press it first, then press the command key. Think of it like a mode switch—you press the prefix to “enter command mode,” then press the specific command key.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Troubleshooting Installation</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">If plugins don’t install, verify your internet connection and Git installation</li>
+<li style="margin: 0.5em 0;">Check that the <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">~/.tmux/plugins/tpm</code> directory exists</li>
+<li style="margin: 0.5em 0;">Ensure the configuration file is properly formatted (no syntax errors)</li>
+<li style="margin: 0.5em 0;">If all else fails, manually clone each plugin into <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">~/.tmux/plugins/</code></li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><a href="#table-of-contents" style="color: #0366d6; text-decoration: none;">← Back to Table of Contents</a></p>
+<hr style="height: 0.25em; padding: 0; margin: 24px 0; background-color: #4b5563; border: 0;">
+<h2 id="logging-capabilities">Logging Capabilities</h2>
+<p style="margin: 1em 0; line-height: 1.6;">The <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">tmux-logging</code> plugin is a game-changer for security professionals. It provides multiple logging modes, each optimized for different security workflows. Whether you need real-time logging, quick captures, or complete history exports, tmux-logging has you covered.</p>
+<h3 id="mode-1-real-time-activity-logging">Mode 1: Real-Time Activity Logging</h3>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Purpose</strong>: Real-time logging captures everything you type and everything the terminal outputs as it happens. This is your primary logging mode for most security operations, creating a comprehensive, timestamped record of all activities.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">How It Works</strong>: When activated, tmux-logging intercepts all terminal I/O (input/output) for the current pane and writes it to a log file. This includes commands, program output, error messages, and any other text that appears in your terminal.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Activation</strong>: <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Prefix + Shift + p</code></p>
+<p style="margin: 1em 0; line-height: 1.6;">Toggle real-time logging on or off for the current pane. When you activate it, you’ll see an indicator in your status bar confirming logging is active.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">File Format</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code style="background-color: transparent; padding: 0; border: none; font-family: inherit;">tmux-#{session_name}-#{window_index}-#{pane_index}-%Y%m%dT%H%M%S.log
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;">This format ensures unique filenames and provides context about which session, window, and pane generated the log.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Real-World Example</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code style="background-color: transparent; padding: 0; border: none; font-family: inherit;">~/tmux-pentest-external-0-1-20250527T165614.log
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;">From this filename, you can immediately identify:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Session name: <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">pentest-external</code></li>
+<li style="margin: 0.5em 0;">Window: 0</li>
+<li style="margin: 0.5em 0;">Pane: 1</li>
+<li style="margin: 0.5em 0;">Timestamp: 2025-05-27 at 16:56:14</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Location</strong>: <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">$HOME</code> (your user home directory)</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">When to Use Real-Time Logging</strong>:</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Penetration Testing Activities</strong>: Activate logging before starting any penetration test engagement. This captures the entire methodology from reconnaissance through exploitation and post-exploitation, providing an irrefutable record of your activities for client reports and compliance documentation.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Incident Response</strong>: During incident response activities, real-time logging creates a chronological record of your investigation steps. This is invaluable for post-incident analysis, stakeholder communication, and legal documentation if required.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Command Auditing</strong>: For security-critical activities where every command matters, real-time logging ensures nothing is missed. Use it when executing destructive commands, making configuration changes, or performing privilege escalation attempts.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Methodology Documentation</strong>: When building or testing new attack techniques, real-time logging captures your experimentation process. You can later review exactly what commands you tried, in what order, and what the results were—perfect for creating detailed methodology documentation.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Training and Knowledge Transfer</strong>: During training or when mentoring junior security professionals, real-time logging captures complete sessions that can be reviewed later to understand thought processes, command usage, and workflow patterns.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><a href="#table-of-contents" style="color: #0366d6; text-decoration: none;">← Back to Table of Contents</a></p>
+<h3 id="mode-2-screen-capture">Mode 2: Screen Capture</h3>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Purpose</strong>: Screen capture saves the currently visible text in your terminal as a text file. Think of it as taking a screenshot, but instead of an image, you get searchable, copy-pasteable text. This is invaluable for quickly capturing findings or tool output without starting a full logging session.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">How It Works</strong>: Tmux-logging captures the text currently displayed in your terminal viewport and saves it to a file. Unlike real-time logging, which captures continuous output, screen capture is a one-time snapshot of what’s visible at that exact moment.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Activation</strong>: <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Prefix + Alt + p</code></p>
+<p style="margin: 1em 0; line-height: 1.6;">Instantly capture the visible text and save it to a log file. The capture is instantaneous—no waiting or indication in the status bar.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">File Format</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code style="background-color: transparent; padding: 0; border: none; font-family: inherit;">tmux-screen-capture-#{session_name}-#{window_index}-#{pane_index}-%Y%m%dT%H%M%S.log
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Real-World Example</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code style="background-color: transparent; padding: 0; border: none; font-family: inherit;">~/tmux-screen-capture-forensics-2-0-20250527T173022.log
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Location</strong>: <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">$HOME</code> (your user home directory)</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">When to Use Screen Capture</strong>:</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Documenting Vulnerability Findings</strong>: When you discover a vulnerability, quickly capture the exploit output, error messages, or tool results. This provides evidence for your penetration testing reports and eliminates manual transcription.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Capturing Tool Output</strong>: Many security tools (like nmap, sqlmap, or Metasploit) output lengthy results. Use screen capture to save specific findings without starting a logging session or selecting text manually.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Report Evidence Collection</strong>: When building penetration testing reports or incident response documentation, screen captures provide textual evidence that can be directly pasted into reports. This is cleaner than screenshots and fully searchable.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Quick Documentation</strong>: Sometimes you need to document something quickly without disrupting your workflow. Screen capture is perfect for these moments—press a key, capture the output, and continue working.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Evidence for Findings</strong>: In penetration testing, showing exactly what a tool returned is crucial. Screen captures of SQL injection output, buffer overflow results, or privilege escalation output provide irrefutable evidence.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><a href="#table-of-contents" style="color: #0366d6; text-decoration: none;">← Back to Table of Contents</a></p>
+<h3 id="mode-3-complete-history-export">Mode 3: Complete History Export</h3>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Purpose</strong>: Complete history export saves the entire scrollback buffer from the beginning of the pane session. This is your retroactive logging option—perfect when you forgot to start real-time logging but still need to capture everything that happened in the session.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">How It Works</strong>: Tmux maintains a scrollback buffer of all previous output (determined by <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">history-limit</code>). The complete history export saves this entire buffer to a file, creating a comprehensive log of everything from the moment the pane was created up to the current point.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Activation</strong>: <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Prefix + Alt + Shift + p</code></p>
+<p style="margin: 1em 0; line-height: 1.6;">Export the complete scrollback buffer for the current pane to a log file.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">File Format</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code style="background-color: transparent; padding: 0; border: none; font-family: inherit;">tmux-history-#{session_name}-#{window_index}-#{pane_index}-%Y%m%dT%H%M%S.log
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Real-World Example</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code style="background-color: transparent; padding: 0; border: none; font-family: inherit;">~/tmux-history-malware-analysis-1-2-20250527T184533.log
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Location</strong>: <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">$HOME</code> (your user home directory)</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Critical Dependency</strong>: This feature depends entirely on your <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">history-limit</code> configuration. Only lines within the scrollback buffer will be saved—if your history limit is too low, you’ll lose older output. The recommended setting of 50,000 lines provides ample buffer for most sessions.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">When to Use Complete History Export</strong>:</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Retroactive Logging</strong>: We’ve all been there—you’re hours into an engagement, realize you forgot to start logging, and need to capture what you’ve done. Complete history export saves the day, capturing everything up to this point.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Session Documentation</strong>: Before closing a long-running session, export the complete history for documentation purposes. This ensures you have a complete record even if you didn’t use real-time logging.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Post-Assessment Review</strong>: After completing a penetration test or investigation, export complete histories for each pane to create comprehensive documentation for reports and debriefings.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Comprehensive Audit Trails</strong>: For engagements requiring complete documentation, export histories for all sessions before cleanup. This creates a complete record for legal, compliance, or client requirements.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Methodology Analysis</strong>: Reviewing complete history exports helps identify patterns in your methodology, understand what approaches worked (and didn’t), and improve your security practices.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><a href="#table-of-contents" style="color: #0366d6; text-decoration: none;">← Back to Table of Contents</a></p>
+<h3 id="mode-4-clear-pane-history">Mode 4: Clear Pane History</h3>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Purpose</strong>: Clearing pane history removes all scrollback content from the buffer. This is essential for operational security—removing sensitive information, resetting session state, or maintaining clean working environments.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">How It Works</strong>: Clearing history doesn’t affect your running processes or current session—it simply removes the scrollback buffer that stores previous output. New commands and output will start a fresh buffer.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Activation</strong>: <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Prefix + Alt + c</code></p>
+<p style="margin: 1em 0; line-height: 1.6;">Immediately clear the scrollback buffer for the current pane.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">When to Clear Pane History</strong>:</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Removing Sensitive Data</strong>: After capturing passwords, API keys, or other sensitive information in terminal output, clear the history to prevent accidental exposure. Even though logs might be saved elsewhere, clearing scrollback prevents shoulder surfing or accidental disclosure.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Resetting Session State</strong>: When starting a new phase of an engagement, clearing history provides a fresh start. This is especially useful when transitioning from reconnaissance to exploitation phases.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Reducing Memory Footprint</strong>: For very long sessions with extensive output, clearing history periodically reduces memory usage. While modern systems handle large buffers well, this can improve performance on resource-constrained systems.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Operational Security</strong>: Before leaving your workstation or sharing your screen, clear scrollback to remove sensitive information that might be visible. This is a simple but effective OpSec practice.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Avoiding Confusion</strong>: When working on multiple engagements in the same session, clearing history between phases prevents accidentally mixing commands or output from different contexts.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><a href="#table-of-contents" style="color: #0366d6; text-decoration: none;">← Back to Table of Contents</a></p>
+<hr style="height: 0.25em; padding: 0; margin: 24px 0; background-color: #4b5563; border: 0;">
+<h2 id="search-and-navigation">Search and Navigation</h2>
+<p style="margin: 1em 0; line-height: 1.6;">Tmux’s copy mode provides powerful search and navigation capabilities for working with your scrollback history. Instead of scrolling endlessly or trying to remember exactly where you saw something, use copy mode to quickly find and review previous output.</p>
+<h3 id="copy-mode">Copy Mode</h3>
+<p style="margin: 1em 0; line-height: 1.6;">Copy mode is Tmux’s terminal-independent way of navigating and interacting with your scrollback buffer. It provides vim-like navigation, powerful search capabilities, and the ability to copy text from your history.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Why Copy Mode Matters</strong>: Modern terminals have their own scrolling and selection capabilities, but they’re inconsistent across platforms and often limited in functionality. Copy mode provides a consistent, powerful interface that works identically on Linux, macOS, and Windows.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Enter Copy Mode</strong>: <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Ctrl + a</code> + <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">[</code></p>
+<p style="margin: 1em 0; line-height: 1.6;">This activates copy mode for the current pane. The mode indicator in your status bar changes, and you can now navigate through your scrollback history.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Navigation in Copy Mode</strong>:</p>
+<p style="margin: 1em 0; line-height: 1.6;">Once in copy mode, use these keys to navigate:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">Arrow Keys</strong>: Move cursor up/down/left/right</li>
+<li style="margin: 0.5em 0;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Page Up</code> / <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Page Down</code>: Move by pages</li>
+<li style="margin: 0.5em 0;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Home</code> / <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">End</code>: Jump to beginning or end of buffer</li>
+<li style="margin: 0.5em 0;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Ctrl + u</code>: Scroll up half a page</li>
+<li style="margin: 0.5em 0;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Ctrl + d</code>: Scroll down half a page</li>
+<li style="margin: 0.5em 0;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Space</code>: Start text selection (use movement keys to extend selection)</li>
+<li style="margin: 0.5em 0;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Enter</code>: Copy selected text to system clipboard</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Search Functionality</strong>:</p>
+<p style="margin: 1em 0; line-height: 1.6;">Search is where copy mode really shines—quickly find commands, output, or patterns in your history:</p>
+<ol style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">Enter Search Mode</strong>: Press <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">/</code> to start searching forward (or <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">?</code> to search backward)</li>
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">Type Your Search Term</strong>: Enter the text you want to find (supports regular expressions)</li>
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">Navigate Results</strong>: Press <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">n</code> to go to the next match, <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Shift + n</code> for previous match</li>
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">Exit Search</strong>: Continue navigation or exit copy mode</li>
+</ol>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Real-World Search Examples</strong>:</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Find Specific Commands</strong>: Search for command names to see when and how you used them.</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Example: Search <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">/nmap</code> to find all nmap commands and their output</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Locate Error Messages</strong>: Quickly find error messages to troubleshoot issues.</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Example: Search <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">/ERROR</code> or <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">/failed</code> to find problematic commands</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Review IP Addresses</strong>: Search for IP addresses to see all interactions with specific hosts.</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Example: Search <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">/192.168.1.100</code> to review all traffic to that IP</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Find Vulnerability Output</strong>: Locate specific vulnerability or exploit output in lengthy output.</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Example: Search <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">/CVE-2023-1234</code> or <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">/RCE</code> to find relevant findings</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Review Reconnaissance Data</strong>: Search through enumeration output for specific services or ports.</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Example: Search <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">/open port/</code> or <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">/SSH</code> to find relevant reconnaissance data</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Exit Copy Mode</strong>: Press <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Esc</code> twice to return to normal terminal mode</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Pro Tip</strong>: If you’re in copy mode and want to run a command you found, you can:</p>
+<ol style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Highlight the command text with space selection</li>
+<li style="margin: 0.5em 0;">Press <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Enter</code> to copy it</li>
+<li style="margin: 0.5em 0;">Exit copy mode (<code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Esc</code> twice)</li>
+<li style="margin: 0.5em 0;">Press <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Ctrl + a</code> then <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">]</code> to paste into the command line</li>
+<li style="margin: 0.5em 0;">Execute the command</li>
+</ol>
+<p style="margin: 1em 0; line-height: 1.6;"><a href="#table-of-contents" style="color: #0366d6; text-decoration: none;">← Back to Table of Contents</a></p>
+<hr style="height: 0.25em; padding: 0; margin: 24px 0; background-color: #4b5563; border: 0;">
+<h2 id="security-considerations">Security Considerations</h2>
+<p style="margin: 1em 0; line-height: 1.6;">While Tmux logging and session management offer tremendous benefits for security workflows, they also introduce considerations around data protection and operational security. This section covers best practices for maintaining security while leveraging Tmux capabilities.</p>
+<h3 id="data-protection">Data Protection</h3>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">1. Sensitive Information in Logs</strong></p>
+<p style="margin: 1em 0; line-height: 1.6;">Log files generated by tmux-logging may contain highly sensitive information that needs protection:</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Types of Sensitive Data</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Passwords and credentials (both in plaintext and potentially hashed)</li>
+<li style="margin: 0.5em 0;">API keys and tokens</li>
+<li style="margin: 0.5em 0;">IP addresses, hostnames, and network topology information</li>
+<li style="margin: 0.5em 0;">Confidential client data or proprietary information</li>
+<li style="margin: 0.5em 0;">Command-line arguments containing sensitive parameters</li>
+<li style="margin: 0.5em 0;">Output from tools that may reveal system configurations or vulnerabilities</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Protection Strategies</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Review Before Sharing</strong>: Before sharing logs with colleagues or clients, review them to ensure no sensitive information is exposed. Use tools like <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">grep</code> to search for common sensitive patterns:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;">grep -i <span class="hljs-string" style="color: #a5d6ff;">&quot;password\|key\|secret\|token&quot;</span> ~/tmux-*.<span class="hljs-built_in" style="color: #519bce;">log</span>
+</code></pre>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Encrypt Logs at Rest</strong>: Store logs in encrypted directories or filesystems. On Linux/macOS, you can use encrypted volumes or directories (e.g., <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">gocryptfs</code>, <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">encfs</code>, or macOS FileVault). This ensures logs remain protected even if your system is compromised.</p>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Secure Deletion</strong>: After retention periods expire or when logs are no longer needed, delete them securely. On Linux: <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">shred -u filename</code>, on macOS: <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">rm -P filename</code>. Don’t just use <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">rm</code>—recovering deleted files is trivial.</p>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Log Sanitization</strong>: Before sharing logs, consider redacting or anonymizing sensitive information. Tools like <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">sed</code> or specialized log sanitizers can help:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;">sed <span class="hljs-string" style="color: #a5d6ff;">&#x27;s/password: .*/password: [REDACTED]/g&#x27;</span> logfile.log &gt; sanitized.log
+</code></pre>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Access Control</strong>: Set restrictive permissions on log files (typically <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">chmod 600</code>) so only the owner can read or write. Avoid world-readable permissions (<code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">chmod 644</code> or <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">777</code>).</p>
+</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">2. Log File Location Management</strong></p>
+<p style="margin: 1em 0; line-height: 1.6;">By default, tmux-logging saves files to your home directory (<code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">$HOME</code>), which may not be the optimal location for security-sensitive logs.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Alternative Locations</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Encrypted Directory</strong>: Create an encrypted directory for logs:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-built_in" style="color: #519bce;">mkdir</span> -p ~/secure-logs
+<span class="hljs-comment" style="color: #7f848e;"># Configure tmux-logging to use this directory (if supported)</span>
+</code></pre>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Project-Specific Directories</strong>: Organize logs by engagement or project:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-built_in" style="color: #519bce;">mkdir</span> -p ~/security-logs/engagement-name
+<span class="hljs-comment" style="color: #7f848e;"># Move logs here after each session</span>
+</code></pre>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Temporary Directory</strong>: Use <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">/tmp</code> or a temporary filesystem for logs that don’t need persistence, ensuring automatic cleanup on reboot.</p>
+</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Log Rotation Policies</strong>: Implement log rotation to prevent unbounded disk usage:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Archive old logs to compressed files</li>
+<li style="margin: 0.5em 0;">Delete logs after defined retention periods</li>
+<li style="margin: 0.5em 0;">Monitor disk usage of log directories</li>
+<li style="margin: 0.5em 0;">Automate cleanup with cron jobs or systemd timers</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">3. History Limit Configuration</strong></p>
+<p style="margin: 1em 0; line-height: 1.6;">The <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">history-limit</code> setting determines how much output Tmux retains in memory. This setting directly impacts logging capabilities and resource usage.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Trade-offs</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Higher Limits</strong> (e.g., 100,000+):</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Pros: Capture more history, better for retroactive logging</li>
+<li style="margin: 0.5em 0;">Cons: Higher memory usage per pane, slower history navigation</li>
+<li style="margin: 0.5em 0;">Use case: Long-running engagements, complex analysis tasks</li>
+</ul>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Moderate Limits</strong> (e.g., 10,000-50,000):</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Pros: Good balance of history and memory usage</li>
+<li style="margin: 0.5em 0;">Cons: May lose very old output in very long sessions</li>
+<li style="margin: 0.5em 0;">Use case: Most penetration testing and incident response work</li>
+</ul>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Lower Limits</strong> (e.g., 1,000-5,000):</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Pros: Minimal memory overhead, fast navigation</li>
+<li style="margin: 0.5em 0;">Cons: Limited retroactive logging capability</li>
+<li style="margin: 0.5em 0;">Use case: Short sessions, resource-constrained systems</li>
+</ul>
+</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Recommendation</strong>: Start with 50,000 lines (as configured). Monitor memory usage during typical sessions and adjust based on your needs and system capabilities.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><a href="#table-of-contents" style="color: #0366d6; text-decoration: none;">← Back to Table of Contents</a></p>
+<h3 id="operational-security">Operational Security</h3>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">1. Session Isolation and Naming</strong></p>
+<p style="margin: 1em 0; line-height: 1.6;">Proper session management prevents cross-contamination of logs and improves organization.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Descriptive Session Names</strong>: Create named sessions for each engagement or task:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;">tmux new-session -s client-xyz-pentest
+tmux new-session -s incident-respond-2025-05-27
+tmux new-session -s malware-analysis-suspect-sample
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Benefits of Isolated Sessions</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">Clear Log Separation</strong>: Each session’s logs are distinctly labeled, preventing confusion</li>
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">Context Preservation</strong>: Switch between engagements without mixing commands or output</li>
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">Clean Workflow</strong>: Close and reopen sessions to create clean states for new tasks</li>
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">Audit Trail Clarity</strong>: Session names provide immediate context in log filenames</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">2. Regular Backups of Critical Logs</strong></p>
+<p style="margin: 1em 0; line-height: 1.6;">For long-running or critical engagements, ensure log files are backed up regularly.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Backup Strategies</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Automated Sync</strong>: Use <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">rsync</code> to sync logs to backup storage:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;">rsync -avz ~/tmux-*.<span class="hljs-built_in" style="color: #519bce;">log</span> backup-server:/backups/security-logs/
+</code></pre>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Cloud Storage with Encryption</strong>: Upload to cloud storage (AWS S3, Azure Blob, etc.) with encryption enabled. Use tools like <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">rclone</code> for automation.</p>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Version Control for Methodologies</strong>: Consider committing non-sensitive log files or methodology summaries to version control for future reference and knowledge sharing.</p>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Periodic Exports</strong>: Use complete history export at defined intervals (e.g., hourly, after each phase) to create incremental backups of session progress.</p>
+</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Encryption During Transfer</strong>: Always encrypt logs during transmission:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-comment" style="color: #7f848e;"># Using scp with SSH (already encrypted)</span>
+scp ~/tmux-*.<span class="hljs-built_in" style="color: #519bce;">log</span> remote:/secure-location/
+
+<span class="hljs-comment" style="color: #7f848e;"># Using rclone with encrypted destinations</span>
+rclone copy ~/tmux-*.<span class="hljs-built_in" style="color: #519bce;">log</span> encrypted-remote:logs/
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">3. Access Control and File Permissions</strong></p>
+<p style="margin: 1em 0; line-height: 1.6;">Ensure only authorized personnel can access your Tmux logs.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">File Permissions</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-comment" style="color: #7f848e;"># Restrict to owner only</span>
+<span class="hljs-built_in" style="color: #519bce;">chmod</span> 600 ~/tmux-*.<span class="hljs-built_in" style="color: #519bce;">log</span>
+
+<span class="hljs-comment" style="color: #7f848e;"># Verify permissions</span>
+<span class="hljs-built_in" style="color: #519bce;">ls</span> -l ~/tmux-*.<span class="hljs-built_in" style="color: #519bce;">log</span>
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Directory Permissions</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-comment" style="color: #7f848e;"># Restrict log directory to owner</span>
+<span class="hljs-built_in" style="color: #519bce;">chmod</span> 700 ~/secure-logs/
+
+<span class="hljs-comment" style="color: #7f848e;"># Set default permissions for new files in directory</span>
+<span class="hljs-built_in" style="color: #519bce;">chmod</span> g+s ~/secure-logs/  <span class="hljs-comment" style="color: #7f848e;"># (if using group)</span>
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">System-level Controls</strong>: For shared systems, consider:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Access Control Lists (ACLs) for fine-grained permissions</li>
+<li style="margin: 0.5em 0;">Mandatory Access Control (MAC) systems (SELinux, AppArmor) for additional protection</li>
+<li style="margin: 0.5em 0;">User groups to restrict log access to specific teams</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Principle of Least Privilege</strong>: Only grant log access to those who absolutely need it. In team environments, create specific log access roles and audit log access attempts.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><a href="#table-of-contents" style="color: #0366d6; text-decoration: none;">← Back to Table of Contents</a></p>
+<hr style="height: 0.25em; padding: 0; margin: 24px 0; background-color: #4b5563; border: 0;">
+<h2 id="quick-reference">Quick Reference</h2>
+<p style="margin: 1em 0; line-height: 1.6;">This section provides quick-reference tables for key bindings and conventions, perfect for printing or keeping handy as a cheat sheet while you learn Tmux.</p>
+<h3 id="key-bindings-summary">Key Bindings Summary</h3>
+<table style="border-collapse: collapse; width: 100%; margin: 1em 0; border-spacing: 0;">
+<thead>
+<tr>
+<th style="border: 1px solid #4b5563; padding: 6px 13px; font-weight: bold; background-color: #161b22;">Action</th>
+<th style="border: 1px solid #4b5563; padding: 6px 13px; font-weight: bold; background-color: #161b22;">Key Binding</th>
+<th style="border: 1px solid #4b5563; padding: 6px 13px; font-weight: bold; background-color: #161b22;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><strong style="font-weight: bold;">Plugin Management</strong></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"></td>
+</tr>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Install Plugins</td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Prefix + I</code></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Capital ‘I’ installs all configured plugins</td>
+</tr>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Update Plugins</td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Prefix + U</code></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Updates all installed plugins</td>
+</tr>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Clean Plugins</td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Prefix + Alt + u</code></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Removes unused plugins</td>
+</tr>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><strong style="font-weight: bold;">Logging Operations</strong></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"></td>
+</tr>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Toggle Real-Time Logging</td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Prefix + Shift + p</code></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Starts/stops continuous logging</td>
+</tr>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Screen Capture</td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Prefix + Alt + p</code></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Captures visible text as log</td>
+</tr>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Save Complete History</td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Prefix + Alt + Shift + p</code></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Exports entire scrollback buffer</td>
+</tr>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Clear Pane History</td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Prefix + Alt + c</code></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Clears scrollback buffer</td>
+</tr>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><strong style="font-weight: bold;">Navigation</strong></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"></td>
+</tr>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Enter Copy Mode</td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Ctrl + a</code> + <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">[</code></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Enter navigation/search mode</td>
+</tr>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Search in Copy Mode</td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">/</code> then search term</td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Search forward for pattern</td>
+</tr>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Previous Search Result</td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Shift + n</code></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Go to previous match</td>
+</tr>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Next Search Result</td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">n</code></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Go to next match</td>
+</tr>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Exit Copy Mode</td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Esc</code> (twice)</td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Return to normal mode</td>
+</tr>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><strong style="font-weight: bold;">Session Management</strong></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"></td>
+</tr>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Create New Session</td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">tmux new -s session-name</code></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Start new named session</td>
+</tr>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">List Sessions</td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">tmux ls</code> or <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Prefix + s</code></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Show all active sessions</td>
+</tr>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Attach to Session</td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">tmux attach -t session-name</code></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Connect to existing session</td>
+</tr>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Detach from Session</td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Prefix + d</code></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Leave session running in background</td>
+</tr>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Kill Session</td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">tmux kill-session -t session-name</code></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Terminate session</td>
+</tr>
+</tbody>
+</table>
+<blockquote style="border-left: 4px solid #4a5568; padding: 0 1em; color: #adb5bd; margin: 1em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Note</strong>: The default Tmux prefix is <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Ctrl + b</code>, but the logging configuration appears to use <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Ctrl + a</code> as the copy mode prefix. Check your <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">.tmux.conf</code> for your specific prefix setting.</p>
+</blockquote>
+<h3 id="file-naming-convention">File Naming Convention</h3>
+<p style="margin: 1em 0; line-height: 1.6;">All log files generated by tmux-logging follow this standardized naming format:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code style="background-color: transparent; padding: 0; border: none; font-family: inherit;">tmux-[type]-[session_name]-[window_index]-[pane_index]-[timestamp].log
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Component Breakdown</strong>:</p>
+<table style="border-collapse: collapse; width: 100%; margin: 1em 0; border-spacing: 0;">
+<thead>
+<tr>
+<th style="border: 1px solid #4b5563; padding: 6px 13px; font-weight: bold; background-color: #161b22;">Component</th>
+<th style="border: 1px solid #4b5563; padding: 6px 13px; font-weight: bold; background-color: #161b22;">Description</th>
+<th style="border: 1px solid #4b5563; padding: 6px 13px; font-weight: bold; background-color: #161b22;">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><strong style="font-weight: bold;">type</strong></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Logging mode type</td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">screen-capture</code>, <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">history</code>, or omitted for real-time</td>
+</tr>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><strong style="font-weight: bold;">session_name</strong></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Name of the Tmux session</td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">pentest-external</code>, <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">incident-response</code></td>
+</tr>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><strong style="font-weight: bold;">window_index</strong></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Window number (0-based)</td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">0</code>, <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">1</code>, <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">2</code>, etc.</td>
+</tr>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><strong style="font-weight: bold;">pane_index</strong></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">Pane number within window (0-based)</td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">0</code>, <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">1</code>, <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">2</code>, etc.</td>
+</tr>
+<tr>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><strong style="font-weight: bold;">timestamp</strong></td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;">ISO 8601 format timestamp</td>
+<td style="border: 1px solid #4b5563; padding: 6px 13px;"><code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">20250527T165614</code> = May 27, 2025 at 16:56:14</td>
+</tr>
+</tbody>
+</table>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Example Filenames Explained</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code style="background-color: transparent; padding: 0; border: none; font-family: inherit;">tmux-pentest-external-0-1-20250527T165614.log
+</code></pre>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Real-time logging (no type prefix)</li>
+<li style="margin: 0.5em 0;">Session: <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">pentest-external</code></li>
+<li style="margin: 0.5em 0;">Window 0, Pane 1</li>
+<li style="margin: 0.5em 0;">Captured on May 27, 2025 at 16:56:14</li>
+</ul>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code style="background-color: transparent; padding: 0; border: none; font-family: inherit;">tmux-screen-capture-forensics-2-0-20250527T173022.log
+</code></pre>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Screen capture</li>
+<li style="margin: 0.5em 0;">Session: <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">forensics</code></li>
+<li style="margin: 0.5em 0;">Window 2, Pane 0</li>
+<li style="margin: 0.5em 0;">Captured on May 27, 2025 at 17:30:22</li>
+</ul>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code style="background-color: transparent; padding: 0; border: none; font-family: inherit;">tmux-history-malware-analysis-1-2-20250527T184533.log
+</code></pre>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Complete history export</li>
+<li style="margin: 0.5em 0;">Session: <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">malware-analysis</code></li>
+<li style="margin: 0.5em 0;">Window 1, Pane 2</li>
+<li style="margin: 0.5em 0;">Captured on May 27, 2025 at 18:45:33</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Naming Best Practices</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Use descriptive session names that provide context</li>
+<li style="margin: 0.5em 0;">The timestamp format ensures chronological sorting</li>
+<li style="margin: 0.5em 0;">Window and pane indices help reconstruct session layout</li>
+<li style="margin: 0.5em 0;">Type prefix indicates logging mode at a glance</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><a href="#table-of-contents" style="color: #0366d6; text-decoration: none;">← Back to Table of Contents</a></p>
+<hr style="height: 0.25em; padding: 0; margin: 24px 0; background-color: #4b5563; border: 0;">
+<h2 id="best-practices">Best Practices</h2>
+<p style="margin: 1em 0; line-height: 1.6;">Follow these proven practices to maximize the effectiveness of your Tmux workflow for security operations.</p>
+<h3 id="1-always-start-logging-early">1. Always Start Logging Early</h3>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">The Golden Rule</strong>: Activate real-time logging (<code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Prefix + Shift + p</code>) at the very beginning of every engagement or important session, before you run any commands.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Why This Matters</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">Complete Audit Trail</strong>: Starting early ensures you capture everything from the first command, creating a complete record for documentation and compliance</li>
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">No Missed Context</strong>: If you forget to log initially, you’ll miss reconnaissance, enumeration, or other early-phase activities that are crucial for methodology documentation</li>
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">Peace of Mind</strong>: Knowing everything is logged allows you to focus on the engagement without worrying about documentation</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">When to Activate Logging</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Before starting penetration testing assessments</li>
+<li style="margin: 0.5em 0;">When beginning incident response investigations</li>
+<li style="margin: 0.5em 0;">Prior to malware analysis sessions</li>
+<li style="margin: 0.5em 0;">Before executing destructive or irreversible commands</li>
+<li style="margin: 0.5em 0;">When starting new security research or experimentation</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Pro Tip</strong>: Make it muscle memory—the moment you start a new engagement or task, your first action should be activating logging.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><a href="#table-of-contents" style="color: #0366d6; text-decoration: none;">← Back to Table of Contents</a></p>
+<h3 id="2-use-descriptive-session-names">2. Use Descriptive Session Names</h3>
+<p style="margin: 1em 0; line-height: 1.6;">Name your Tmux sessions meaningfully to provide immediate context and organization.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Naming Conventions</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code style="background-color: transparent; padding: 0; border: none; font-family: inherit;"># Penetration testing
+tmux new -s client-xyz-external-assessment
+
+# Incident response
+tmux new -s incident-respond-2025-05-27
+
+# Malware analysis
+tmux new -s malware-suspect-ransomware-sample
+
+# Security infrastructure
+tmux new -s siem-config-updates
+
+# Research/experimentation
+tmux new -s research-active-directory-enum
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Benefits</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">Instant Context</strong>: Session names appear in log filenames, status bars, and session lists</li>
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">Better Organization</strong>: Group related activities within named sessions</li>
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">Clean Workflow</strong>: Easily switch between different tasks or engagements</li>
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">Professional Documentation</strong>: Descriptive names in logs and reports look more professional</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Naming Tips</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Include client or target identifiers when appropriate</li>
+<li style="margin: 0.5em 0;">Add dates for time-based activities (daily incident response, weekly maintenance)</li>
+<li style="margin: 0.5em 0;">Use clear, professional language (avoid slang or unclear abbreviations)</li>
+<li style="margin: 0.5em 0;">Consider session scope—broad names for general work, specific names for focused tasks</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><a href="#table-of-contents" style="color: #0366d6; text-decoration: none;">← Back to Table of Contents</a></p>
+<h3 id="3-regular-screen-captures-for-documentation">3. Regular Screen Captures for Documentation</h3>
+<p style="margin: 1em 0; line-height: 1.6;">Take periodic screen captures (<code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Prefix + Alt + p</code>) throughout your engagements to document findings, key outputs, and evidence.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">When to Capture Screens</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">Vulnerability Discovery</strong>: Immediately after discovering a vulnerability, capture the exploit output or evidence</li>
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">Tool Output</strong>: Save results from enumeration tools (nmap, enum4linux, etc.) for easy reference</li>
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">Error Messages</strong>: Capture error messages for troubleshooting and documentation</li>
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">Configuration Changes</strong>: Document system configurations before and after changes</li>
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">Testing Results</strong>: Save output from successful exploit attempts or privilege escalations</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Screen Capture Workflow</strong>:</p>
+<ol style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Run your security tool or command</li>
+<li style="margin: 0.5em 0;">Review the output to confirm it’s complete</li>
+<li style="margin: 0.5em 0;">Press <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Prefix + Alt + p</code> to capture</li>
+<li style="margin: 0.5em 0;">Continue with your workflow (no interruption)</li>
+</ol>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Benefits Over Manual Copying</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Faster than selecting and copying text</li>
+<li style="margin: 0.5em 0;">Captures complete output (not truncated by viewport)</li>
+<li style="margin: 0.5em 0;">Preserves formatting and structure</li>
+<li style="margin: 0.5em 0;">Creates timestamped files automatically</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><a href="#table-of-contents" style="color: #0366d6; text-decoration: none;">← Back to Table of Contents</a></p>
+<h3 id="4-export-history-periodically">4. Export History Periodically</h3>
+<p style="margin: 1em 0; line-height: 1.6;">Use complete history exports (<code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Prefix + Alt + Shift + p</code>) at key points in your engagement to create comprehensive session backups and documentation.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">When to Export Histories</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">Before Clearing History</strong>: Always export before clearing scrollback buffers</li>
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">At Phase Transitions</strong>: Export when moving between engagement phases (reconnaissance → exploitation)</li>
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">Before Long Breaks</strong>: Export before leaving for extended periods to ensure nothing is lost</li>
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">After Complex Tasks</strong>: Export after completing complex, multi-step procedures</li>
+<li style="margin: 0.5em 0;"><strong style="font-weight: bold;">Before Session Termination</strong>: Export complete history before ending Tmux sessions</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Export Workflow</strong>:</p>
+<ol style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Navigate to the pane whose history you want to export</li>
+<li style="margin: 0.5em 0;">Press <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Prefix + Alt + Shift + p</code></li>
+<li style="margin: 0.5em 0;">Wait for the file to be created (check status bar notification)</li>
+<li style="margin: 0.5em 0;">Optionally rename or move the file for better organization</li>
+<li style="margin: 0.5em 0;">Continue working or proceed to next task</li>
+</ol>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Post-Export Organization</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-comment" style="color: #7f848e;"># Move exported history to organized location</span>
+<span class="hljs-built_in" style="color: #519bce;">mv</span> ~/tmux-history-pentest-*.<span class="hljs-built_in" style="color: #519bce;">log</span> ~/security-logs/client-xyz/
+
+<span class="hljs-comment" style="color: #7f848e;"># Rename for clarity</span>
+<span class="hljs-built_in" style="color: #519bce;">mv</span> tmux-history-pentest-0-0-20250527T184533.<span class="hljs-built_in" style="color: #519bce;">log</span> client-xyz-recon-complete.log
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;"><a href="#table-of-contents" style="color: #0366d6; text-decoration: none;">← Back to Table of Contents</a></p>
+<h3 id="5-secure-log-storage">5. Secure Log Storage</h3>
+<p style="margin: 1em 0; line-height: 1.6;">Store your Tmux logs securely to protect sensitive information and maintain operational security.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Secure Storage Practices</strong>:</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Encrypted Directories</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-comment" style="color: #7f848e;"># Create encrypted directory (using gocryptfs as example)</span>
+<span class="hljs-built_in" style="color: #519bce;">mkdir</span> -p ~/encrypted-logs
+gocryptfs -init ~/encrypted-logs
+gocryptfs ~/encrypted-logs ~/secure-logs
+
+<span class="hljs-comment" style="color: #7f848e;"># Configure tmux-logging to use ~/secure-logs/</span>
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Appropriate Permissions</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-comment" style="color: #7f848e;"># Restrict to owner only</span>
+<span class="hljs-built_in" style="color: #519bce;">chmod</span> 600 ~/tmux-*.<span class="hljs-built_in" style="color: #519bce;">log</span>
+
+<span class="hljs-comment" style="color: #7f848e;"># Ensure log directory is restricted</span>
+<span class="hljs-built_in" style="color: #519bce;">chmod</span> 700 ~/secure-logs/
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Regular Cleanup</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-comment" style="color: #7f848e;"># Remove old logs (example: older than 90 days)</span>
+find ~/secure-logs/ -name <span class="hljs-string" style="color: #a5d6ff;">&quot;tmux-*.log&quot;</span> -mtime +90 -delete
+
+<span class="hljs-comment" style="color: #7f848e;"># Or compress old logs</span>
+find ~/secure-logs/ -name <span class="hljs-string" style="color: #a5d6ff;">&quot;tmux-*.log&quot;</span> -mtime +30 -<span class="hljs-built_in" style="color: #519bce;">exec</span> gzip {} \;
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Backup Strategy</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-comment" style="color: #7f848e;"># Sync to secure backup location</span>
+rsync -avz --delete ~/secure-logs/ /backup/encrypted-storage/security-logs/
+
+<span class="hljs-comment" style="color: #7f848e;"># Or upload to encrypted cloud storage</span>
+rclone <span class="hljs-built_in" style="color: #519bce;">sync</span> ~/secure-logs/ encrypted-remote:security-logs/
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;"><a href="#table-of-contents" style="color: #0366d6; text-decoration: none;">← Back to Table of Contents</a></p>
+<h3 id="6-maintain-log-hygiene">6. Maintain Log Hygiene</h3>
+<p style="margin: 1em 0; line-height: 1.6;">Regularly manage your logs to prevent accumulation of old data and maintain organizational clarity.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Log Maintenance Practices</strong>:</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Regular Review</strong>: Periodically review your logs to ensure they’re still needed</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Delete logs from completed engagements after retention period</li>
+<li style="margin: 0.5em 0;">Archive logs for long-term reference instead of keeping them in active storage</li>
+<li style="margin: 0.5em 0;">Identify and remove duplicates or incomplete logs</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Organizational Structure</strong>: Maintain a clean directory structure</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code style="background-color: transparent; padding: 0; border: none; font-family: inherit;">~/security-logs/
+├── 2025/
+│   ├── 01-january/
+│   ├── 02-february/
+│   └── ...
+├── archived/
+│   ├── engagement-1/
+│   └── engagement-2/
+└── templates/
+    └── log-analysis-scripts/
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Automated Cleanup</strong>: Create cron jobs to manage old logs</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-comment" style="color: #7f848e;"># Clean up logs older than 180 days every Sunday</span>
+0 2 * * 0 find ~/security-logs/ -name <span class="hljs-string" style="color: #a5d6ff;">&quot;tmux-*.log&quot;</span> -mtime +180 -delete
+
+<span class="hljs-comment" style="color: #7f848e;"># Compress logs older than 30 days daily</span>
+0 3 * * * find ~/security-logs/ -name <span class="hljs-string" style="color: #a5d6ff;">&quot;tmux-*.log&quot;</span> -mtime +30 -<span class="hljs-built_in" style="color: #519bce;">exec</span> gzip {} \;
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;"><a href="#table-of-contents" style="color: #0366d6; text-decoration: none;">← Back to Table of Contents</a></p>
+<h3 id="7-document-methodology-using-logs">7. Document Methodology Using Logs</h3>
+<p style="margin: 1em 0; line-height: 1.6;">Leverage your Tmux logs to create comprehensive methodology documentation and support your findings.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Using Logs for Documentation</strong>:</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Penetration Testing Reports</strong>: Extract key commands and outputs to support your findings</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-comment" style="color: #7f848e;"># Extract nmap scan results for report</span>
+grep -A 20 <span class="hljs-string" style="color: #a5d6ff;">&quot;Starting Nmap&quot;</span> ~/tmux-pentest-*.<span class="hljs-built_in" style="color: #519bce;">log</span> &gt; scan-results.txt
+
+<span class="hljs-comment" style="color: #7f848e;"># Find successful exploit attempts</span>
+grep -B 5 <span class="hljs-string" style="color: #a5d6ff;">&quot;SUCCESS\|pwned\|access granted&quot;</span> ~/tmux-pentest-*.<span class="hljs-built_in" style="color: #519bce;">log</span> &gt; exploit-successes.txt
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Incident Response Documentation</strong>: Chronological timeline of investigation steps</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-comment" style="color: #7f848e;"># Create timeline of incident response activities</span>
+<span class="hljs-keyword" style="color: #c678dd;">for</span> <span class="hljs-built_in" style="color: #519bce;">log</span> <span class="hljs-keyword" style="color: #c678dd;">in</span> ~/tmux-incident-*.<span class="hljs-built_in" style="color: #519bce;">log</span>; <span class="hljs-keyword" style="color: #c678dd;">do</span>
+    <span class="hljs-built_in" style="color: #519bce;">echo</span> <span class="hljs-string" style="color: #a5d6ff;">&quot;=== <span class="hljs-subst" style="color: #56b6c2;">$(basename $log)</span> ===&quot;</span>
+    <span class="hljs-built_in" style="color: #519bce;">head</span> -20 <span class="hljs-string" style="color: #a5d6ff;">&quot;<span class="hljs-variable" style="color: #d19a66;">$log</span>&quot;</span>  <span class="hljs-comment" style="color: #7f848e;"># Show early activities in each log</span>
+<span class="hljs-keyword" style="color: #c678dd;">done</span> &gt; incident-timeline.txt
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Methodology Sharing</strong>: Share sanitized logs with team members for knowledge transfer</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-comment" style="color: #7f848e;"># Redact sensitive information before sharing</span>
+sed <span class="hljs-string" style="color: #a5d6ff;">&#x27;s/password: [^ ]*/password: [REDACTED]/g&#x27;</span> ~/tmux-*.<span class="hljs-built_in" style="color: #519bce;">log</span> &gt; sanitized-for-sharing.log
+</code></pre>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Legal and Compliance</strong>: Logs provide audit trails for compliance requirements</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">PCI DSS requires documentation of security assessments</li>
+<li style="margin: 0.5em 0;">HIPAA requires audit trails for incident response</li>
+<li style="margin: 0.5em 0;">Regulatory audits often require evidence of security activities</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><a href="#table-of-contents" style="color: #0366d6; text-decoration: none;">← Back to Table of Contents</a></p>
+<hr style="height: 0.25em; padding: 0; margin: 24px 0; background-color: #4b5563; border: 0;">
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p style="margin: 1em 0; line-height: 1.6;">Even the most well-configured systems encounter issues. This section covers common Tmux problems and their solutions.</p>
+<h3 id="plugins-not-loading">Plugins Not Loading</h3>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Symptoms</strong>: Tmux starts, but plugin functionality (logging, resurrect, etc.) doesn’t work.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Troubleshooting Steps</strong>:</p>
+<ol style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Verify TPM Installation</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-comment" style="color: #7f848e;"># Check if TPM directory exists</span>
+<span class="hljs-built_in" style="color: #519bce;">ls</span> -la ~/.tmux/plugins/tpm
+
+<span class="hljs-comment" style="color: #7f848e;"># Expected output should show directory contents</span>
+</code></pre>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Reload Tmux Configuration</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-comment" style="color: #7f848e;"># From outside Tmux</span>
+tmux <span class="hljs-built_in" style="color: #519bce;">source</span> ~/.tmux.conf
+
+<span class="hljs-comment" style="color: #7f848e;"># Or from within Tmux session</span>
+tmux source-file ~/.tmux.conf
+</code></pre>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Reinstall Plugins</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-comment" style="color: #7f848e;"># In a Tmux session, press:</span>
+Prefix + I
+<span class="hljs-comment" style="color: #7f848e;"># Wait for &quot;done&quot; notification</span>
+</code></pre>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Check Configuration File</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-comment" style="color: #7f848e;"># Verify config file exists</span>
+<span class="hljs-built_in" style="color: #519bce;">ls</span> -la ~/.tmux.conf
+
+<span class="hljs-comment" style="color: #7f848e;"># Check for syntax errors</span>
+<span class="hljs-built_in" style="color: #519bce;">cat</span> ~/.tmux.conf | grep -i error
+</code></pre>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Manually Clone Plugins</strong> (if automated install fails):</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-built_in" style="color: #519bce;">cd</span> ~/.tmux/plugins/
+git <span class="hljs-built_in" style="color: #519bce;">clone</span> https://github.com/tmux-plugins/tmux-logging
+git <span class="hljs-built_in" style="color: #519bce;">clone</span> https://github.com/tmux-plugins/tmux-resurrect
+git <span class="hljs-built_in" style="color: #519bce;">clone</span> https://github.com/roosta/tmux-fuzzback
+</code></pre>
+</li>
+</ol>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Common Causes</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Network issues preventing git clone operations</li>
+<li style="margin: 0.5em 0;">Syntax errors in <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">.tmux.conf</code> file</li>
+<li style="margin: 0.5em 0;">Missing dependencies or Git not installed</li>
+<li style="margin: 0.5em 0;">File permissions preventing plugin installation</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><a href="#table-of-contents" style="color: #0366d6; text-decoration: none;">← Back to Table of Contents</a></p>
+<h3 id="logs-not-appearing">Logs Not Appearing</h3>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Symptoms</strong>: You activate logging, but no log files appear in your home directory.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Troubleshooting Steps</strong>:</p>
+<ol style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Check Home Directory Permissions</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-comment" style="color: #7f848e;"># Verify you can write to home directory</span>
+<span class="hljs-built_in" style="color: #519bce;">ls</span> -la ~
+
+<span class="hljs-comment" style="color: #7f848e;"># Test file creation</span>
+<span class="hljs-built_in" style="color: #519bce;">touch</span> ~/test-write &amp;&amp; <span class="hljs-built_in" style="color: #519bce;">rm</span> ~/test-write
+</code></pre>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Verify File System Has Space</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-comment" style="color: #7f848e;"># Check disk usage</span>
+<span class="hljs-built_in" style="color: #519bce;">df</span> -h ~
+
+<span class="hljs-comment" style="color: #7f848e;"># If disk is full, clear space or use alternative location</span>
+</code></pre>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Confirm Logging is Active</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Look for logging indicator in Tmux status bar (usually shows “LOGGING ON”)</li>
+<li style="margin: 0.5em 0;">Check if status bar is visible (<code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Prefix + :</code> then <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">set status on</code>)</li>
+</ul>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Check Tmux Version</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;">tmux -V
+
+<span class="hljs-comment" style="color: #7f848e;"># Ensure version is 2.1 or higher for full logging support</span>
+</code></pre>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Manually Test Plugin</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-comment" style="color: #7f848e;"># In Tmux, check if plugin is loaded</span>
+Prefix + :
+<span class="hljs-comment" style="color: #7f848e;"># Run command: list-keys -T root</span>
+<span class="hljs-comment" style="color: #7f848e;"># Look for logging-related key bindings</span>
+</code></pre>
+</li>
+</ol>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Common Causes</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Full disk partition</li>
+<li style="margin: 0.5em 0;">Incorrect file permissions</li>
+<li style="margin: 0.5em 0;">Tmux version too old (upgrade required)</li>
+<li style="margin: 0.5em 0;">Plugin not properly installed or loaded</li>
+<li style="margin: 0.5em 0;">Status bar disabled, hiding logging indicator</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><a href="#table-of-contents" style="color: #0366d6; text-decoration: none;">← Back to Table of Contents</a></p>
+<h3 id="search-not-working-in-copy-mode">Search Not Working in Copy Mode</h3>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Symptoms</strong>: You enter copy mode but search (<code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">/</code>) doesn’t find expected text.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Troubleshooting Steps</strong>:</p>
+<ol style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Ensure Copy Mode is Active</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Look for visual indicator in status bar (usually shows “COPY MODE”)</li>
+<li style="margin: 0.5em 0;">If not active, press <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">Ctrl + a</code> + <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">[</code> to enter</li>
+</ul>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Verify Search Syntax</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Ensure you’re using forward slash <code style="background-color: rgba(255, 255, 255, 0.1); padding: 0.2em 0.4em; margin: 0; font-size: 85%; border-radius: 3px; font-family: Consolas, Monaco, 'Courier New', monospace;">/</code> for forward search</li>
+<li style="margin: 0.5em 0;">Check for special characters that need escaping</li>
+<li style="margin: 0.5em 0;">Try simpler search terms first (e.g., search for “ERROR” instead of complex regex)</li>
+</ul>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Check History Limit</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-comment" style="color: #7f848e;"># Verify history limit in config</span>
+grep history-limit ~/.tmux.conf
+
+<span class="hljs-comment" style="color: #7f848e;"># If too low, content may have aged out of buffer</span>
+<span class="hljs-built_in" style="color: #519bce;">set</span> -g history-limit 50000  <span class="hljs-comment" style="color: #7f848e;"># Add or increase this line</span>
+</code></pre>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Test with Known Content</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Type a unique string like “TEST12345” in the terminal</li>
+<li style="margin: 0.5em 0;">Enter copy mode and search for it</li>
+<li style="margin: 0.5em 0;">If found, search is working; issue was search term didn’t exist</li>
+</ul>
+</li>
+<li style="margin: 0.5em 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Check Scrollback Buffer</strong>:</p>
+<pre class="ms-rteElement-CodeHTML" style="border: 1px solid #4a5568; background-color: #1e1e1e; padding: 16px; margin: 10px 0; overflow-x: auto; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 13px; line-height: 1.5;"><code class="language-bash" style="background-color: transparent; padding: 0; border: none; font-family: inherit;"><span class="hljs-comment" style="color: #7f848e;"># In Tmux, check how many lines in buffer</span>
+Prefix + :
+<span class="hljs-comment" style="color: #7f848e;"># Run command: display-message &#x27;scrollback: #{scrollback_history_size}&#x27;</span>
+
+<span class="hljs-comment" style="color: #7f848e;"># If 0 or very low, history may be cleared or not capturing</span>
+</code></pre>
+</li>
+</ol>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Common Causes</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Copy mode not actually active</li>
+<li style="margin: 0.5em 0;">Search term doesn’t exist in history</li>
+<li style="margin: 0.5em 0;">History was cleared or aged out</li>
+<li style="margin: 0.5em 0;">Complex search patterns not matching</li>
+<li style="margin: 0.5em 0;">Buffer cleared recently, removing searchable content</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><a href="#table-of-contents" style="color: #0366d6; text-decoration: none;">← Back to Table of Contents</a></p>
+<hr style="height: 0.25em; padding: 0; margin: 24px 0; background-color: #4b5563; border: 0;">
+<h2 id="additional-resources">Additional Resources</h2>
+<p style="margin: 1em 0; line-height: 1.6;">Expand your Tmux knowledge and capabilities with these resources.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Official Documentation</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;"><a href="https://github.com/tmux/tmux/wiki" style="color: #0366d6; text-decoration: none;">Tmux Official Documentation</a> - Comprehensive reference for all Tmux features and commands</li>
+<li style="margin: 0.5em 0;"><a href="https://man7.org/linux/man-pages/man1/tmux.1.html" style="color: #0366d6; text-decoration: none;">Tmux Manual Pages</a> - Detailed manual documentation</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Plugin Repositories</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;"><a href="https://github.com/tmux-plugins/tpm" style="color: #0366d6; text-decoration: none;">TPM (Tmux Plugin Manager)</a> - Plugin manager source and documentation</li>
+<li style="margin: 0.5em 0;"><a href="https://github.com/tmux-plugins/tmux-logging" style="color: #0366d6; text-decoration: none;">Tmux Logging Plugin</a> - Documentation and configuration options for logging</li>
+<li style="margin: 0.5em 0;"><a href="https://github.com/tmux-plugins/tmux-resurrect" style="color: #0366d6; text-decoration: none;">Tmux Resurrect Plugin</a> - Session saving and restoration capabilities</li>
+<li style="margin: 0.5em 0;"><a href="https://github.com/tmux-plugins/tmux-continuum" style="color: #0366d6; text-decoration: none;">Tmux Continuum Plugin</a> - Automatic session restoration (optional)</li>
+<li style="margin: 0.5em 0;"><a href="https://github.com/roosta/tmux-fuzzback" style="color: #0366d6; text-decoration: none;">Tmux Fuzzback</a> - Fuzzy search through scrollback history</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Community Resources</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;"><a href="https://github.com/rothgar/awesome-tmux" style="color: #0366d6; text-decoration: none;">Awesome Tmux</a> - Curated list of Tmux plugins, configurations, and resources</li>
+<li style="margin: 0.5em 0;"><a href="https://www.reddit.com/r/tmux/" style="color: #0366d6; text-decoration: none;">Tmux on Reddit</a> - Community discussions, configurations, and troubleshooting</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Tutorials and Guides</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;"><a href="https://www.hamvocke.com/blog/a-quick-and-easy-guide-to-tmux/" style="color: #0366d6; text-decoration: none;">Tmux: Productive Mouse-Free Development</a> - Comprehensive tutorial for beginners</li>
+<li style="margin: 0.5em 0;"><a href="https://hackernoon.com/the-tao-of-tmux-8bd8d59e0361" style="color: #0366d6; text-decoration: none;">The Tao of Tmux</a> - Advanced Tmux usage and philosophy</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">Security-Specific Resources</strong>:</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;"><a href="https://www.kali.org/tools/tmux/" style="color: #0366d6; text-decoration: none;">Tmux for Penetration Testers</a> - Kali Linux documentation for security professionals</li>
+<li style="margin: 0.5em 0;"><a href="https://www.sans.org/white-papers/secure-terminal/" style="color: #0366d6; text-decoration: none;">Secure Terminal Usage</a> - Best practices for secure terminal operations</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><a href="#table-of-contents" style="color: #0366d6; text-decoration: none;">← Back to Table of Contents</a></p>
+<hr style="height: 0.25em; padding: 0; margin: 24px 0; background-color: #4b5563; border: 0;">
+<h2 id="changelog">Changelog</h2>
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">2025-12-28</strong>: Comprehensive documentation created</p>
+<ul style="padding-left: 2em; margin: 1em 0;">
+<li style="margin: 0.5em 0;">Added detailed installation and configuration instructions</li>
+<li style="margin: 0.5em 0;">Expanded logging capabilities with real-world use cases</li>
+<li style="margin: 0.5em 0;">Included security considerations and best practices</li>
+<li style="margin: 0.5em 0;">Added troubleshooting section for common issues</li>
+<li style="margin: 0.5em 0;">Created quick reference tables for key bindings</li>
+</ul>
+<p style="margin: 1em 0; line-height: 1.6;"><a href="#table-of-contents" style="color: #0366d6; text-decoration: none;">← Back to Table of Contents</a></p>
+<hr style="height: 0.25em; padding: 0; margin: 24px 0; background-color: #4b5563; border: 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><em style="font-style: italic;">This guide is optimized for security professionals conducting penetration testing, incident response, malware analysis, and operational security activities. Adapt configurations and practices to align with your organizational policies, engagement requirements, and compliance frameworks.</em></p>
+<hr style="height: 0.25em; padding: 0; margin: 24px 0; background-color: #4b5563; border: 0;">
+<p style="margin: 1em 0; line-height: 1.6;"><strong style="font-weight: bold;">About This Guide</strong></p>
+<p style="margin: 1em 0; line-height: 1.6;">This documentation transforms standard Tmux configuration into a security-optimized terminal environment. The plugins and settings have been specifically selected to address the unique needs of security professionals—automated logging for audit trails, session persistence for long-running engagements, and search capabilities for efficient analysis.</p>
+<p style="margin: 1em 0; line-height: 1.6;">Whether you’re an experienced penetration tester, incident responder, or just starting in security operations, this Tmux configuration will enhance your productivity, improve your documentation quality, and ensure your critical activities are never lost.</p>
+<p style="margin: 1em 0; line-height: 1.6;"><em style="font-style: italic;">Last updated: December 28, 2025</em></p>
